@@ -178,5 +178,27 @@ namespace MVCWeb
             result += "</select>";
             return MvcHtmlString.Create(result);
         }
+
+        /// <summary>
+        /// 转化经验为等级和下一级所需经验
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="exp"></param>
+        /// <returns></returns>
+        public static KeyValuePair<int, int> GetLevelKVP(this HtmlHelper html, int exp)
+        {
+            int level = 1;
+            int nlexp = 0;
+            while(true)
+            {
+                nlexp += (int)Math.Pow(2, level) * 20;
+                if (nlexp > exp)
+                {
+                    break;
+                }
+                level++;
+            }
+            return new KeyValuePair<int, int>(level, nlexp);
+        }
     }
 }

@@ -238,6 +238,30 @@ namespace MVCWeb.Controllers
             return Json(new { msg = "done" });
         }
 
+        //加经验
+        public void AddEXP(NullUser user, int exp)
+        {
+            user.EXPDate = user.EXPDate == null ? DateTime.Now : user.EXPDate;
+            if (user.EXPDate.Value.Date == DateTime.Now.Date)
+            {
+                int todayExp = user.TodayEXP == null ? 0 : user.TodayEXP.Value;
+                if (todayExp < 500)
+                {
+                    user.EXPDate = DateTime.Now;
+                    user.EXP = (user.EXP == null ? 0 : user.EXP) + exp;
+                    user.TodayEXP = (user.TodayEXP == null ? 0 : user.TodayEXP) + exp;
+                    NullUserDataSvc.Update(user);
+                }
+            }
+            else
+            {
+                user.EXPDate = DateTime.Now;
+                user.EXP = (user.EXP == null ? 0 : user.EXP) + exp;
+                user.TodayEXP = exp;
+                NullUserDataSvc.Update(user);
+            }
+        }
+
         #endregion
 
         #region 姿势blog
@@ -780,6 +804,8 @@ namespace MVCWeb.Controllers
                 {
                     ViewBag.ShowSignIn = true;
                 }
+                NullUser currentUser = NullUserDataSvc.GetByID(CurrentUser.ID);
+                ViewBag.EXP = currentUser.EXP == null ? 0 : currentUser.EXP;
             }
             return View();
         }
@@ -819,6 +845,9 @@ namespace MVCWeb.Controllers
             nbf.Order = 1;
             nbf.OwnerID = CurrentUser.ID;
             NewBeeFloorDataSvc.Add(nbf);
+            
+            //发帖加经验
+            AddEXP(NullUserDataSvc.GetByID(nb.OwnerID), 10);
 
             return Json(new { msg = "done" });
         }
@@ -960,8 +989,7 @@ namespace MVCWeb.Controllers
                 MyRedisDB.RedisDB.KeyExpire(starKey, DateTime.Now.AddHours(3));
 
                 //被收藏加经验
-                newBee.Owner.EXP = (newBee.Owner.EXP == null ? 0 : newBee.Owner.EXP) + 5;
-                NullUserDataSvc.Update(newBee.Owner);
+                AddEXP(newBee.Owner, 10);
 
             }
             return Json(new { msg = "done" });
@@ -1012,6 +1040,13 @@ namespace MVCWeb.Controllers
             NewBeeFloorDataSvc.Add(floor);
 
             NewBeeDataSvc.Update(newBee);
+            
+            //回帖加经验
+            if(newBee.OwnerID != floor.OwnerID)
+            {
+                AddEXP(newBee.Owner, 5);
+                AddEXP(NullUserDataSvc.GetByID(floor.OwnerID), 5);
+            }
 
             if (newBee.OwnerID != CurrentUser.ID)
             {

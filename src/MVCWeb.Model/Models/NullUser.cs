@@ -85,6 +85,16 @@ namespace MVCWeb.Model.Models
         public int? EXP { get; set; }
 
         /// <summary>
+        /// 今日已加经验
+        /// </summary>
+        public int? TodayEXP { get; set; }
+
+        /// <summary>
+        /// 最后加经验时间
+        /// </summary>
+        public DateTime? EXPDate { get; set; }
+
+        /// <summary>
         /// 姿势集合
         /// </summary>
         public virtual ICollection<Blog> Blogs { get; set; }

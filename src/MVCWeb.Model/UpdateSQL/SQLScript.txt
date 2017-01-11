@@ -21,3 +21,7 @@ update newbee set Top=0;
 
 #170109
 alter table nulluser add EXP int;
+
+#170111
+alter table nulluser add TodayEXP int;
+alter table nulluser add EXPDate datetime;
