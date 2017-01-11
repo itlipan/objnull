@@ -1,0 +1,76 @@
+﻿@using MVCWeb;
+@using MVCWeb.Model.Models;
+@using HtmlAgilityPack;
+@{
+    List<Blog> BlogList = ViewBag.BlogList as List<Blog>;
+}
+
+@foreach (Blog blog in BlogList)
+{
+    string userName = string.IsNullOrEmpty(blog.Owner.Name) ? blog.Owner.GitHubLogin : blog.Owner.Name;
+    //提取预览内容
+    HtmlDocument htmlDoc = new HtmlDocument();
+    htmlDoc.LoadHtml(blog.MDValue);
+    string innerText = htmlDoc.DocumentNode.InnerText;
+    string result = innerText.MaxByteLength(350);
+    <div class="row">
+        <div class="col-md-12">
+            <div class="media" style="padding-bottom: 15px">
+                <div class="media-left">
+                    <div style="height: 38px;padding-top: 2px;text-align: center;">
+                        @{
+                            string className = "";
+                            switch (blog.Type)
+                            {
+                                case (int)EnumBlogType.文章:
+                                    className = "label-primary";
+                                    break;
+                                case (int)EnumBlogType.宣传:
+                                    className = "label-danger";
+                                    break;
+                                case (int)EnumBlogType.心得:
+                                    className = "label-info";
+                                    break;
+                                case (int)EnumBlogType.科普:
+                                    className = "label-success";
+                                    break;
+                                case (int)EnumBlogType.搬运:
+                                    className = "label-warning";
+                                    break;
+                            }
+                        }
+                        <span class="label @className" style="font-weight: 400">@Enum.GetName(typeof(EnumBlogType), blog.Type)</span>
+                    </div>
+                    <a href="@Url.Action("UserProfile", "Home", new { id = blog.Owner.ID })" target="_blank">
+                        <img class="img-rounded" style="max-width: 48px" src="@blog.Owner.AvatarUrl&s=48" height="48" width="48" alt="@blog.Owner.Name" title="@blog.Owner.Name">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <div class="media-heading fs1"><a href="@Url.Action("BlogView", "Home", new { id = blog.ID })" target="_blank" style="text-decoration:none">@blog.Title</a></div>
+                    <div class="fs2" style="height: 35px; overflow: hidden"><p>@Html.Raw(result)</p></div>
+                    <div class="fs2" style="padding-top:2px">
+                        <span>
+                            <span class="glyphicon glyphicon-user"></span>
+                            <a href="@Url.Action("UserProfile", "Home", new { id = blog.Owner.ID })" target="_blank">@userName.MaxByteLength(20)</a> post at&nbsp;
+                        </span>
+                        <span title="发布日期"><span class="glyphicon glyphicon-time"></span>@blog.InsertDate.ToString("yyyy-MM-dd HH:mm")&nbsp;</span>
+                        <span title="查看次数"><span class="glyphicon glyphicon-eye-open"></span>@blog.ViewCount&nbsp;</span>
+                        <span title="评论次数"><span class="glyphicon glyphicon-comment"></span>@blog.CommentCount&nbsp;</span>
+                        <span title="点赞次数"><span class="glyphicon glyphicon-thumbs-up"></span>@blog.ProCount</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                            }
+<input type="hidden" id="TotalCount" value="@ViewBag.TotalCount" />
+<input type="hidden" id="CurrentPage" value="@ViewBag.CurrentPage" />
+<div class="row">
+    <div id="JPager" class="col-md-12 text-center">
+    </div>
+</div>
+<div id="HtmlEmpty" class="row" style="display:none; padding-top: 50px; padding-bottom: 50px">
+    <div class="col-md-12 text-center">
+        最近<span id="TxtDays"></span>天没有<span id="TxtOrder"></span>
+    </div>
+</div>

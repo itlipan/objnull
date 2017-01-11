@@ -1,0 +1,99 @@
+﻿@using MVCWeb.Model.Models
+@{
+    NewBee NewBee = ViewBag.NewBee as NewBee;
+    ViewBag.Title = NewBee.Title + " - 象空";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+@section head{
+    <!--fileupload-->
+    <script src="~/Scripts/FileUpload/vendor/jquery.ui.widget.js"></script>
+    <script src="~/Scripts/FileUpload/jquery.iframe-transport.js"></script>
+    <script src="~/Scripts/FileUpload/jquery.fileupload.js"></script>
+    <!--highlight.js-->
+    <link href="~/Scripts/HighlightJs/default.min.css" rel="stylesheet" />
+    <script src="~/Scripts/HighlightJs/highlight.min.js"></script>
+    <!--marked-->
+    <script src="~/Scripts/Marked/marked.js"></script>
+    <!--simplePagination-->
+    <script src="~/Scripts/SimplePagination/jquery.simplePagination.js"></script>
+    <!--Page-->
+    <script src="~/Scripts/Views/NewBeeView.js"></script>
+}
+<div class="row" style="padding: 15px 0px">
+    <div id="MDTitle" class="col-md-11 text-center fs1">
+        @NewBee.Title
+    </div>
+    <div class="col-md-1 text-right">
+        @if (ViewBag.Login && !ViewBag.Owner && ViewBag.ShowStar)
+        {
+            <button id="BtnStar" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-bookmark"></span> 收藏
+            </button>
+        }
+    </div>
+</div>
+<div class="row">
+    <div id="NewBeeFloorPage" class="col-md-12">
+    </div>
+</div>
+<hr />
+@if (ViewBag.Login)
+{
+    if (string.IsNullOrEmpty(ViewBag.DisableMsg))
+    {
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="row" style="padding-bottom: 10px">
+                    <div class="col-md-3">
+                        <ul class="nav nav-pills" role="tablist">
+                            <li role="presentation" class="active"><a href="javascript:;" id="BtnCmt">回帖</a></li>
+                            <li role="presentation"><a href="javascript:;" id="BtnPre">预览</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-9 text-right" style="line-height: 40px">
+                        <span>查看&nbsp;<a href="http://mvc.objnull.com/zh/Demo/MarkDownSyntax" target="_blank">MarkDown语法，</a></span>
+                        <input id="JqueryUpload" class="uploader" type="file" name="upFile" data-url="@Url.Action("JqueryUploadImg", "File", new { pt = (int)EnumObjectType.社区 })" style="display:none">
+                        <span>拖拽或<a id="TxtChoseFile" href="javascript:;">选择图片</a>上传（chrome内核支持截图粘贴）</span>
+                        <span id="UpPercent" style="color:#ff6a00"></span>
+                    </div>
+                    <input id="ValPt" type="hidden" value="@((int)EnumObjectType.社区)" />
+                </div>
+                <div class="row">
+                    <div id="PreBox" class="col-md-12 mdv" style="min-height: 50px">
+                    </div>
+                    <div id="EditBox" class="col-md-12">
+                        <textarea id="CmtTxt" class="form-control" rows="5" style="resize:vertical;"></textarea>
+                    </div>
+                </div>
+                <div class="row" style="padding: 10px 0px">
+                    <div class="col-md-12 text-center">
+                        <button id="BtnConfirm" class="btn btn-default">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row" style="padding: 30px 0px">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                @ViewBag.DisableMsg
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="row" style="padding: 30px 0px">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            请登录后TreeNewBee
+        </div>
+    </div>
+}
+<input type="hidden" id="ValNewbeeID" value="@NewBee.ID" />
+<input type="hidden" id="ValNBOwnerID" value="@NewBee.OwnerID" />
+<input id="ValCOrder" type="hidden" value="@ViewBag.COrder" />
+<input id="ValROrder" type="hidden" value="@ViewBag.ROrder" />
+<input id="ValCPageSize" type="hidden" value="20" />
+<input id="ValRPageSize" type="hidden" value="10" />
+

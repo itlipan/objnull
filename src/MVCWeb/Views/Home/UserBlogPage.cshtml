@@ -1,0 +1,67 @@
+﻿@using MVCWeb;
+@using MVCWeb.Model.Models;
+@{
+    List<Blog> UserBlogs = ViewBag.UserBlogs as List<Blog>;
+}
+@foreach (Blog blog in UserBlogs)
+{
+    <div class="row BlogInfo" style="padding: 5px 0px">
+        <div class="col-md-12" style="line-height: 25px; height:25px">
+            <div style="float:left; margin-top: -2px">
+                @{
+                    string className = "";
+                    switch (blog.Type)
+                    {
+                        case (int)EnumBlogType.文章:
+                            className = "label-primary";
+                            break;
+                        case (int)EnumBlogType.宣传:
+                            className = "label-danger";
+                            break;
+                        case (int)EnumBlogType.心得:
+                            className = "label-info";
+                            break;
+                        case (int)EnumBlogType.科普:
+                            className = "label-success";
+                            break;
+                        case (int)EnumBlogType.搬运:
+                            className = "label-warning";
+                            break;
+                    }
+                }
+                <span class="label @className" style="font-weight: 400">@Enum.GetName(typeof(EnumBlogType), blog.Type)</span>
+            </div>
+            <div style="float: left;padding: 0px 5px">
+                <a class="fs3" href="@Url.Action("BlogView", "Home", new { id = blog.ID })" target="_blank" style="text-decoration:none">
+                    @blog.Title.MaxByteLength(54)
+                </a>&nbsp;
+                @if (ViewBag.Owner)
+                {
+                    <span style="display:none" id="TxtModify">
+                        <a href="@Url.Action("BlogEdit", "Home", new { id = blog.ID })" target="_blank">改</a>&nbsp;
+                        <a href="javascript:;" onclick="BlogDelete('@blog.ID', @ViewBag.CurrentPage)">删</a>
+                    </span>
+                }
+            </div>
+            <div class="fs2" style="float:right">
+                <span title="查看次数"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;@blog.ViewCount</span>&nbsp;
+                <span title="评论次数"><span class="glyphicon glyphicon-comment"></span>&nbsp;@blog.CommentCount</span>&nbsp;
+                <span title="点赞次数"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;@blog.ProCount</span>&nbsp;
+                <span title="发布日期"><span class="glyphicon glyphicon-time"></span>&nbsp;@blog.InsertDate.ToBlurDate()</span>
+            </div>
+        </div>
+    </div>
+}
+@if (UserBlogs.Count == 0)
+{
+    <div class="row" style="padding: 30px 0px">
+        <div class="col-md-12 text-center">
+            没有找到相关数据
+        </div>
+    </div>
+}
+<input type="hidden" id="TotalCount" value="@ViewBag.TotalCount" />
+<input type="hidden" id="CurrentPage" value="@ViewBag.CurrentPage" />
+<div class="row" style="margin-bottom: -15px">
+    <div id="UserPager" class="col-md-12 text-center"></div>
+</div>

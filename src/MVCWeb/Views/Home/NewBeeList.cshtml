@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewBag.Title = Enum.GetName(typeof(EnumObjectType), EnumObjectType.社区) + " - 开源Github用户社区";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+@section head{
+    <!--fileupload-->
+    <script src="~/Scripts/FileUpload/vendor/jquery.ui.widget.js"></script>
+    <script src="~/Scripts/FileUpload/jquery.iframe-transport.js"></script>
+    <script src="~/Scripts/FileUpload/jquery.fileupload.js"></script>
+    <!--highlight.js-->
+    <link href="~/Scripts/HighlightJs/default.min.css" rel="stylesheet" />
+    <script src="~/Scripts/HighlightJs/highlight.min.js"></script>
+    <!--marked-->
+    <script src="~/Scripts/Marked/marked.js"></script>
+    <!--simplePagination-->
+    <script src="~/Scripts/SimplePagination/jquery.simplePagination.js"></script>
+    <!--Page-->
+    <script src="~/Scripts/Views/NewBeeList.js"></script>
+}
+<div class="row">
+    <div class="col-md-6">在这里谈笑风生。</div>
+    <div class="col-md-6 text-right"><a href="javascript:;" title="我叫你一声" onclick="FavoriteSite()">你敢点一下吗</a></div>
+</div>
+<div class="row" style="padding-bottom: 15px">
+    <div class="col-md-12" style="height: 100px;">
+        @*<iframe src="~/StaticHtml/Page1/index.html" frameborder="0" height="100%" width="100%" scrolling="no"></iframe>
+        <div style="position:absolute; top: 30%; left: 5%; font-size: 24px; font-family: 'Microsoft YaHei'">亦可赛艇</div>*@
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-1 text-right">
+                <div style="height: 50px; line-height: 50px">
+                    @if (ViewBag.Login)
+                    {
+                        if (ViewBag.ShowSignIn)
+                        {
+                            <button id="BtnSignIn" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> 签到</button>
+                        }
+                        else
+                        {
+                            <span>已签到</span>
+                        }
+                    }
+                </div>
+                <div style="height: 50px; line-height: 50px">
+                    <button id="BtnPostNew" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span> 发帖</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input id="ValPageSize" type="hidden" value="30" />
+<div class="row">
+    <div id="NewBeePage" class="col-md-12">
+    </div>
+</div>
+<hr />
+@if (ViewBag.Login)
+{
+    if (string.IsNullOrEmpty(ViewBag.DisableMsg))
+    {
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="row" style="padding-bottom: 10px">
+                    <div class="col-md-12">
+                        <input id="TxtTitle" class="form-control" type="text" placeholder="标题" />
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom: 10px">
+                    <div class="col-md-3">
+                        <ul class="nav nav-pills" role="tablist">
+                            <li role="presentation" class="active"><a href="javascript:;" id="BtnCmt">内容</a></li>
+                            <li role="presentation"><a href="javascript:;" id="BtnPre">预览</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-9 text-right" style="line-height: 40px">
+                        <span>查看&nbsp;<a href="http://mvc.objnull.com/zh/Demo/MarkDownSyntax" target="_blank">MarkDown语法，</a></span>
+                        <input id="JqueryUpload" class="uploader" type="file" name="upFile" data-url="@Url.Action("JqueryUploadImg", "File", new { pt = (int)EnumObjectType.社区 })" style="display:none">
+                        <span>拖拽或<a id="TxtChoseFile" href="javascript:;">选择图片</a>上传（chrome内核支持截图粘贴）</span>
+                        <span id="UpPercent" style="color:#ff6a00"></span>
+                    </div>
+                    <input id="ValPt" type="hidden" value="@((int)EnumObjectType.社区)" />
+                </div>
+                <div class="row">
+                    <div id="PreBox" class="col-md-12 mdv" style="min-height: 50px">
+                    </div>
+                    <div id="EditBox" class="col-md-12">
+                        <textarea id="CmtTxt" class="form-control" rows="5" style="resize:vertical;"></textarea>
+                    </div>
+                </div>
+                <div class="row" style="padding: 10px 0px">
+                    <div class="col-md-12 text-center">
+                        <button id="BtnConfirm" class="btn btn-default">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row" style="padding: 30px 0px">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                @ViewBag.DisableMsg
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="row" style="padding: 30px 0px">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            请登录后发帖
+        </div>
+    </div>
+}
+

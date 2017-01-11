@@ -1,0 +1,117 @@
+﻿@using MVCWeb.Model.Models;
+@{
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    NullUser User = ViewBag.User as NullUser;
+    ViewBag.Title = User.GitHubLogin + (string.IsNullOrEmpty(User.Name) ? "" : "(" + User.Name + ")");
+}
+@section head{
+    <!--simplePagination-->
+    <script src="~/Scripts/SimplePagination/jquery.simplePagination.js"></script>
+    <!--Page-->
+    <script src="~/Scripts/Views/UserProfile.js"></script>
+}
+<div class="row" style="padding-top: 24px">
+    <div class="col-md-3">
+        <div>
+            <a href="https://github.com/@User.GitHubLogin/" target="_blank">
+                <img src="@User.AvatarUrl&s=230" class="img-rounded" style="max-width: 230px" />
+            </a>
+        </div>
+        <div style="padding: 16px 0px;">
+            <div class="fs1" style="word-break:break-all">@User.Name</div>
+            <div style="font-size:18px; color:#666; font-weight:300">@User.GitHubLogin</div>
+        </div>
+        <div style="padding-bottom: 5px" id="DivEmail">
+            <span class="glyphicon glyphicon-envelope"></span>&nbsp;
+            @if (ViewBag.Login && ViewBag.Owner)
+            {
+                if (string.IsNullOrEmpty(User.Email))
+                {
+                    <a href="javascript:;" onclick="EmailEdit()">设置</a>
+                }
+                else
+                {
+                    <span>@User.Email&nbsp;&nbsp;</span>
+                    <a id="BtnEdit" href="javascript:;" onclick="EmailEdit()">修改</a>
+                }
+            }
+            else
+            {
+                <span>@(string.IsNullOrEmpty(User.Email) ? "未设置显示" : User.Email)</span>
+            }
+        </div>
+        @if (ViewBag.Login && ViewBag.Owner)
+        {
+            <div style="padding-bottom: 5px; display:none" id="DivEmailEdit">
+                <span class="glyphicon glyphicon-envelope"></span>&nbsp;
+                <input type="text" id="TxtNewEmail" style="width: 150px" />
+                <button id="BtnSetEmail" class="btn btn-success btn-sm" onclick="SetNewEmail()">√</button>
+                <button class="btn btn-danger btn-sm" onclick="EmailCancelEdit()">×</button>
+            </div>
+        }
+        <div style="padding-bottom: 5px">
+            <span class="glyphicon glyphicon-time"></span>&nbsp;
+            <span>@User.InsertDate.ToString("yyyy-MM-dd") 加入</span>
+        </div>
+        <div>
+            <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;
+            <span><span id="TxtProCount">@User.ProCount</span> 个赞</span>
+        </div>
+        <hr style="margin-top: 16px; margin-bottom: 16px" />
+        <div style="padding-bottom: 16px">
+            <a class="btn btn-default btn-sm" href="https://github.com/@User.GitHubLogin/" target="_blank" style="margin-right: 10px">
+                <svg aria-hidden="true" class="" height="16" version="1.1" viewBox="0 0 16 16" width="16" style="margin: -4px 0px">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>&nbsp;Github
+            </a>
+            @if (ViewBag.Login && !ViewBag.Owner)
+            {
+                <button id="BtnFollow" class="btn btn-default btn-sm" style="margin-right: 10px; display: none">
+                    <span id="IcoFollow" class="glyphicon glyphicon-plus"></span>&nbsp;
+                    <span id="TxtFollow">Follow</span>
+                </button>
+                if (ViewBag.ShowPro)
+                {
+                    <button id="BtnPro" class="btn btn-default btn-sm">
+                        <span id="IcoFollow" class="glyphicon glyphicon-thumbs-up"></span>&nbsp;
+                        <span id="TxtFollow">赞</span>
+                    </button>
+                }
+            }
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-12">
+                @if (!ViewBag.Owner)
+                {
+                    <ul class="nav nav-tabs" id="UserNav">
+                        <li><a id="BtnBlog" href="javascript:;">Tade 姿势</a></li>
+                        <li><a id="BtnNewBee" href="javascript:;">Tade NewBee</a></li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav nav-tabs nav-justified" id="UserNav">
+                        <li><a id="BtnBlog" href="javascript:;">Word 姿势</a></li>
+                        <li><a id="BtnNewBee" href="javascript:;">Word NewBee</a></li>
+                        <li><a id="BtnStar" href="javascript:;">Word 收藏</a></li>
+                        <li><a id="BtnMyMsg" href="javascript:;">Word 动态</a></li>
+                    </ul>
+                }
+            </div>
+        </div>
+        <div class="row" style="padding-top:15px">
+            <div id="UserData" class="col-md-12"></div>
+        </div>
+    </div>
+</div>
+<input id="ValUserID" type="hidden" value="@User.ID" />
+<input id="ValGitHubLogin" type="hidden" value="@User.GitHubLogin" />
+<input id="ValUserToken" type="hidden" value="@ViewBag.Token" />
+<input id="ValOwner" type="hidden" value="@(ViewBag.Owner ? "1" : "0")" />
+
+<input id="ValBlogPageSize" type="hidden" value="10" />
+<input id="ValNewBeePageSize" type="hidden" value="10" />
+<input id="ValStarPageSize" type="hidden" value="10" />
+<input id="ValMsgPageSize" type="hidden" value="15" />

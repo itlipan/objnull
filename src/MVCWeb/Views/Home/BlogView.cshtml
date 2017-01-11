@@ -1,0 +1,151 @@
+﻿@using MVCWeb.Model.Models
+@{
+    Blog Blog = ViewBag.Blog as Blog;
+    ViewBag.Title = Blog.Title + " - 象空";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+@section head{
+    <!--highlight.js-->
+    <link href="~/Scripts/HighlightJs/default.min.css" rel="stylesheet" />
+    <script src="~/Scripts/HighlightJs/highlight.min.js"></script>
+    <!--marked-->
+    <script src="~/Scripts/Marked/marked.js"></script>
+    <!--simplePagination-->
+    <script src="~/Scripts/SimplePagination/jquery.simplePagination.js"></script>
+    <!--Page-->
+    <script src="~/Scripts/Views/BlogView.js"></script>
+}
+<div class="row" style="padding-top: 15px">
+    <div id="MDTitle" class="col-md-10 fs1">
+        @Blog.Title
+    </div>
+    <div class="col-md-2 text-right">
+        @{
+            string className = "";
+            switch (Blog.Type)
+            {
+                case (int)EnumBlogType.文章:
+                    className = "label-primary";
+                    break;
+                case (int)EnumBlogType.宣传:
+                    className = "label-danger";
+                    break;
+                case (int)EnumBlogType.心得:
+                    className = "label-info";
+                    break;
+                case (int)EnumBlogType.科普:
+                    className = "label-success";
+                    break;
+                case (int)EnumBlogType.搬运:
+                    className = "label-warning";
+                    break;
+            }
+        }
+        <span class="label @className" style="font-weight: 400">@Enum.GetName(typeof(EnumBlogType), Blog.Type)</span>
+    </div>
+</div>
+<div class="row" style="margin-top: 15px">
+    <div id="MDValue" class="col-md-12 mdv">
+        @Html.Raw(Blog.MDValue)
+    </div>
+</div>
+<div id="Status" class="row" style="margin-top: 15px">
+    <div class="col-md-6" style="line-height: 40px; height: 40px">
+        @{
+            string userName = string.IsNullOrEmpty(Blog.Owner.Name) ? Blog.Owner.GitHubLogin : Blog.Owner.Name;
+        }
+        <a href="@Url.Action("UserProfile", "Home", new { id = Blog.Owner.ID })" target="_blank" style="text-decoration:none">
+            <img class="img-rounded" style="max-width: 32px" src="@Blog.Owner.AvatarUrl&s=32" height="32" width="32" alt="@userName" title="@userName">
+        </a>
+        <span><a href="@Url.Action("UserProfile", "Home", new { id = Blog.Owner.ID })" target="_blank">@userName.MaxByteLength(20)</a> post at&nbsp;</span>
+        <span title="发布日期"><span class="glyphicon glyphicon-time"></span>@Blog.InsertDate.ToString("yyyy-MM-dd HH:mm")&nbsp;</span>
+        <span title="查看次数"><span class="glyphicon glyphicon-eye-open"></span>@Blog.ViewCount&nbsp;</span>
+        <span title="评论次数"><span class="glyphicon glyphicon-comment"></span><span id="CommentCount">@Blog.CommentCount</span>&nbsp;</span>
+        <span title="点赞次数"><span class="glyphicon glyphicon-thumbs-up"></span><span id="ProCount">@Blog.ProCount</span></span>
+    </div>
+    <div class="col-md-6 text-right" style="line-height: 40px; height: 40px">
+        @if (ViewBag.Login)
+        {
+            <button id="BtnComment" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-comment"></span> 评论
+            </button>
+            if (!ViewBag.Owner)
+            {
+                if (ViewBag.ShowStar)
+                {
+                    <span>&nbsp;&nbsp;</span>
+                    <button id="BtnStar" type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-bookmark"></span> 收藏
+                    </button>
+                }
+                if (ViewBag.ShowPro)
+                {
+                    <span>&nbsp;&nbsp;</span>
+                    <button id="BtnPro" type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-thumbs-up"></span> 赞
+                    </button>
+                }
+            }
+            else
+            {
+                <span>&nbsp;&nbsp;</span>
+                <a id="BtnEdit" class="btn btn-default" href="@Url.Action("BlogEdit", "Home", new { id = Blog.ID })">
+                    <span class="glyphicon glyphicon-pencil"></span> 编辑
+                </a>
+            }
+        }
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="well well-sm">
+            评论列表
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div id="Comments" class="col-md-12">
+    </div>
+</div>
+<div class="row CommentBox">
+    <div class="col-md-12" style="margin-bottom: 10px">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="javascript:;" id="BtnCmt">评论</a></li>
+            <li role="presentation"><a href="javascript:;" id="BtnPre">预览</a></li>
+        </ul>
+    </div>
+</div>
+<div class="row CommentBox">
+    <div id="PreBox" class="col-md-12 mdv" style="min-height: 50px">
+
+    </div>
+    <div id="EditBox" class="col-md-12">
+        @if (string.IsNullOrEmpty(ViewBag.DisableMsg))
+        {
+            <span>查看&nbsp;<a href="http://mvc.objnull.com/zh/Demo/MarkDownSyntax" target="_blank">MarkDown语法</a></span>
+            <textarea id="CmtTxt" class="form-control" rows="5" style="resize:vertical;"></textarea>
+        }
+        else
+        {
+            @ViewBag.DisableMsg
+        }
+    </div>
+</div>
+<div class="row CommentBox" style="padding: 10px 0px">
+    @if (string.IsNullOrEmpty(ViewBag.DisableMsg))
+    {
+        <div class="col-md-5 text-right">
+            <button id="BtnConfirm" class="btn btn-default">确定</button>
+        </div>
+        <div class="col-md-5 col-md-offset-2 text-left">
+            <button id="BtnCancel" class="btn btn-default">取消</button>
+        </div>
+    }
+</div>
+<input id="ValBlogID" type="hidden" value="@Blog.ID" />
+<input id="ValBlogOwnerID" type="hidden" value="@Blog.OwnerID" />
+<input id="ValCOrder" type="hidden" value="@ViewBag.COrder" />
+<input id="ValROrder" type="hidden" value="@ViewBag.ROrder" />
+<input id="ValCPageSize" type="hidden" value="10" />
+<input id="ValRPageSize" type="hidden" value="10" />

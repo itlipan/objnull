@@ -1,0 +1,61 @@
+﻿@using MVCWeb;
+@using MVCWeb.Model.Models;
+@using MVCWeb.Redis.Models;
+@{
+    List<NullUser> UserList = ViewBag.UserList as List<NullUser>;
+    IEnumerable<DisabledUser> DisabledUsers = ViewBag.DisabledUsers as IEnumerable<DisabledUser>;
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Github登录名</th>
+            <th>登录日期</th>
+            <th>登录IP</th>
+            <th>地址</th>
+            <th>角色</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    @{ 
+        int i = 0;
+    }
+    @foreach (NullUser user in UserList)
+    {
+        i++;
+        <tr>
+            <td><a href="@Url.Action("UserProfile", "Home", new { id = user.ID })" target="_blank">@user.GitHubLogin</a></td>
+            <td>@user.LastLoginDate</td>
+            <td class="IP">@user.LastLoginIP</td>
+            <td id="TxtIPAddr"></td>
+            <td>@Enum.GetName(typeof(EnumUserRole), user.Role)</td>
+            <td style="width: 240px">
+                @foreach(DisabledUser du in DisabledUsers.Where(d => d.UserID == user.ID && d.AbleDate > DateTime.Now))
+                {
+                    <div>禁-@(Enum.GetName(typeof(EnumObjectType), du.ObjectType))至@(du.AbleDate)</div>
+                }
+            </td>
+            <td>
+                @foreach (object value in Enum.GetValues(typeof(EnumObjectType)))
+                {
+                    if (DisabledUsers.Where(d => d.UserID == user.ID && d.ObjectType == (int)value && d.AbleDate > DateTime.Now).Count() > 0)
+                    {
+                        <button onclick="UserOperate('启', '@user.ID', @((int)value), @i)">启-@(Enum.GetName(typeof(EnumObjectType), value))</button>
+                    }
+                    else
+                    {
+                        <button onclick="UserOperate('禁', '@user.ID', @((int)value), @i)">禁-@(Enum.GetName(typeof(EnumObjectType), value))</button>
+                    }
+                    <span>&nbsp;</span>
+                }
+                <input id="TxtDisableDay@(i)" type="text" style="width: 30px" />天
+            </td>
+        </tr>
+    }
+</table>
+
+<input type="hidden" id="UserTotalCount" value="@ViewBag.TotalCount" />
+<input type="hidden" id="UserCurrentPage" value="@ViewBag.CurrentPage" />
+<div class="row" style="margin-bottom: -15px">
+    <div id="UserPager" class="col-md-12 text-center"></div>
+</div>
