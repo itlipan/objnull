@@ -13,7 +13,7 @@
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span>
-                <img class="img-rounded" style="max-width: 32px; margin: -7px 0px" src="@(CurrentUser.AvatarUrl)&s=32" height="32" width="32" />&nbsp;&nbsp;@(CurrentUser.UserName.MaxByteLength(20)) &nbsp;&nbsp;<span class="caret"></span>
+                @(CurrentUser.UserName.MaxByteLength(20)) &nbsp;&nbsp;<span class="caret"></span>
             </span>
         </a>
         <ul class="dropdown-menu" role="menu">

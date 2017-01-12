@@ -195,6 +195,12 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <None Include="Properties\PublishProfiles\Pub.pubxml" />
+    <Content Include="Images\Lv\lv2.png" />
+    <Content Include="Images\Lv\lv5.png" />
+    <Content Include="Images\Lv\lv6.png" />
+    <Content Include="Images\Lv\lv1.png" />
+    <Content Include="Images\Lv\lv4.png" />
+    <Content Include="Images\Lv\lv3.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\FileUpload\app.js" />
@@ -307,6 +313,7 @@
     <Content Include="Views\Home\Feedback.cshtml" />
     <Content Include="Views\Home\FeedbackPage.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\UserCard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

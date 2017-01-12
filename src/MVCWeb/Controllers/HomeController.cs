@@ -262,6 +262,14 @@ namespace MVCWeb.Controllers
             }
         }
 
+        //用户卡
+        public ActionResult UserCard(Guid userID)
+        {
+            ViewBag.Owner = userID == CurrentUser.ID;
+            ViewBag.CheckUser = NullUserDataSvc.GetByID(userID);
+            return View();
+        }
+
         #endregion
 
         #region 姿势blog
@@ -804,8 +812,8 @@ namespace MVCWeb.Controllers
                 {
                     ViewBag.ShowSignIn = true;
                 }
-                NullUser currentUser = NullUserDataSvc.GetByID(CurrentUser.ID);
-                ViewBag.EXP = currentUser.EXP == null ? 0 : currentUser.EXP;
+
+                ViewBag.CurrentUserID = CurrentUser.ID;
             }
             return View();
         }
@@ -870,6 +878,9 @@ namespace MVCWeb.Controllers
 
             IEnumerable<Guid> NewBeeIDs = newBeeList.Select(n => n.ID);
             ViewBag.FirstFloors = NewBeeFloorDataSvc.GetByCondition(f => NewBeeIDs.Contains(f.NewBeeID) && f.Order == 1).ToList();
+            IEnumerable<Guid> ownerIDs = newBeeList.Select(n => n.OwnerID);
+            ViewBag.NewBeeOwners = NullUserDataSvc.GetByCondition(n => ownerIDs.Contains(n.ID)).ToList();
+
             return View();
         }
 
@@ -1080,12 +1091,16 @@ namespace MVCWeb.Controllers
         {
             int totalCount = 0;
             ViewBag.Login = CurrentUser != null;
-            ViewBag.NewBeeFloorList = NewBeeFloorDataSvc.GetPagedEntitys(ref pageNum, pageSize, it => it.NewBeeID == nbID, it => it.InsertDate, false, out totalCount).ToList();
+            List<NewBeeFloor> nbfList = NewBeeFloorDataSvc.GetPagedEntitys(ref pageNum, pageSize, it => it.NewBeeID == nbID, it => it.InsertDate, false, out totalCount).ToList();
+            ViewBag.NewBeeFloorList = nbfList;
             ViewBag.TotalCount = totalCount;
             ViewBag.CurrentPage = pageNum;
             ViewBag.ShowPager = totalCount > pageSize;
 
-            if(ViewBag.Login)
+            IEnumerable<Guid> ownerIDs = nbfList.Select(n => n.OwnerID);
+            ViewBag.NewBeeFloorOwners = NullUserDataSvc.GetByCondition(n => ownerIDs.Contains(n.ID)).ToList();
+
+            if (ViewBag.Login)
             {
                 DisabledUser user = MyRedisDB.GetSet<DisabledUser>(MyRedisKeys.DisabledUsers).Where(d => d.UserID == CurrentUser.ID && d.ObjectType == (int)EnumObjectType.社区 && d.AbleDate > DateTime.Now).FirstOrDefault();
                 if (user != null)
@@ -1168,10 +1183,14 @@ namespace MVCWeb.Controllers
         {
             int totalCount;
             ViewBag.Login = CurrentUser != null;
-            ViewBag.NewBeeFloorReplyList = NewBeeFloorReplyDataSvc.GetPagedEntitys(ref pageNum, pageSize, it => it.NewBeeFloorID == floorID, it => it.InsertDate, false, out totalCount).ToList();
+            IEnumerable<NewBeeFloorReply> nbfrList = NewBeeFloorReplyDataSvc.GetPagedEntitys(ref pageNum, pageSize, it => it.NewBeeFloorID == floorID, it => it.InsertDate, false, out totalCount).ToList();
+            ViewBag.NewBeeFloorReplyList = nbfrList;
             ViewBag.TotalCount = totalCount;
             ViewBag.CurrentPage = pageNum;
             ViewBag.COrder = corder;
+
+            IEnumerable<Guid> userIDs = nbfrList.Select(n => n.OwnerID).Concat(nbfrList.Select(n => n.ToUserID));
+            ViewBag.UserList = NullUserDataSvc.GetByCondition(n => userIDs.Contains(n.ID)).ToList();
 
             if (ViewBag.Login)
             {

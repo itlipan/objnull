@@ -1,4 +1,5 @@
-﻿//NewBeePage
+﻿var popupTimeout = null;
+//NewBeePage
 function NewBeePage(index) {
     var pageSize = parseInt($("#ValPageSize").val());
     var postData = { pageSize: pageSize, pageNum: index }
@@ -8,6 +9,20 @@ function NewBeePage(index) {
         data: postData,
         success: function (result) {
             $("#NewBeePage").html(result);
+            $('.popup').bind('mouseenter', function () {
+                window.clearTimeout(popupTimeout);
+                if ($(this).attr("href") != null) {
+                    $(".popup2").css("top", $(this).parent().parent().position().top + 20);
+                    $(".popup2").show();
+                }
+            });
+
+            $('.popup').bind('mouseleave', function () {
+                popupTimeout = window.setTimeout(function () {
+                    $('.popup2').hide();
+                }, 1000);
+            });
+
             var total = parseInt($("#TotalCount").val());
             if (total <= pageSize) {
                 return;
@@ -36,9 +51,24 @@ function InsertAtCaret(id, val) {
     $txt.val(textAreaTxt.substring(0, caretPos) + val + textAreaTxt.substring(caretPos));
 }
 
+//获取用户资料卡
+function GetUserCard(uid) {
+    $.ajax({
+        url: "/Home/UserCard?userID=" + uid,
+        type: "get",
+        dataType: "html",
+        success: function (html) {
+            $("#DivCard").html(html);
+        }
+    });
+}
+
 $(function () {
     $("#PreBox").hide();
     NewBeePage(1);
+    if ($("#DivCard").attr("uid") != null) {
+        GetUserCard($("#DivCard").attr("uid"));
+    }
 
     //代码高亮插件
     marked.setOptions({
@@ -149,7 +179,7 @@ $(function () {
                     $("#TxtTitle").val("");
                     $("#CmtTxt").val("");
                     NewBeePage(1);
-                    $("html,body").animate({ scrollTop: $("#NewBeePage").offset().top - 100 }, 300);
+                    $("html,body").animate({ scrollTop: 0 }, 300);
                 } else {
                     swal(result.msg);
                 }
@@ -167,6 +197,7 @@ $(function () {
                 $("#BtnSignIn").attr("disabled", false);
                 if (result.msg == "done") {
                     $("#BtnSignIn").parent().html("<span>已签到</span>");
+                    GetUserCard($("#DivCard").attr("uid"));
                 } else {
                     swal(result.msg);
                 }

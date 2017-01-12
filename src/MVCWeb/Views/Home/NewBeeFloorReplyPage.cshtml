@@ -1,10 +1,19 @@
 ﻿@using MVCWeb.Model.Models
 @{
     List<NewBeeFloorReply> NewBeeFloorReplyList = ViewBag.NewBeeFloorReplyList as List<NewBeeFloorReply>;
+    List<NullUser> UserList = ViewBag.UserList as List<NullUser>;
 }
 
 @foreach (NewBeeFloorReply reply in NewBeeFloorReplyList)
 {
+    NullUser ouser = UserList.Where(n => n.ID == reply.OwnerID).First();
+    int oexp = ouser.EXP == null ? 0 : ouser.EXP.Value;
+    string oucolor = Html.GetLevelColor(Html.GetLevelKVP(oexp).Key);
+
+    NullUser tuser = UserList.Where(n => n.ID == reply.ToUserID).First();
+    int texp = tuser.EXP == null ? 0 : tuser.EXP.Value;
+    string tucolor = Html.GetLevelColor(Html.GetLevelKVP(texp).Key);
+
     if (reply.Delete)
     {
         <div class="row" style="padding: 10px 0px">
@@ -25,8 +34,8 @@
             </div>
             <div style="padding-left:40px">
                 <span>
-                    <a href="@Url.Action("UserProfile", "Home", new { id = reply.Owner.ID })" target="_blank">@userName.MaxByteLength(20)</a>&nbsp;回复&nbsp;
-                    <a href="@Url.Action("UserProfile", "Home", new { id = reply.ToUserID })" target="_blank">@toUserName.MaxByteLength(20)</a>&nbsp;
+                    <a href="@Url.Action("UserProfile", "Home", new { id = reply.Owner.ID })" target="_blank" style="color: @oucolor">@userName.MaxByteLength(20)</a>&nbsp;回复
+                    <a href="@Url.Action("UserProfile", "Home", new { id = reply.ToUserID })" target="_blank" style="color: @tucolor">@toUserName.MaxByteLength(20)</a>&nbsp;
                     <span title="回复时间"><span class="glyphicon glyphicon-time"></span>@reply.InsertDate.ToBlurDate()</span>&nbsp;
                     @if (ViewBag.Login && ViewBag.CUID == reply.OwnerID)
                     {

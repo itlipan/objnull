@@ -28,27 +28,20 @@
             <div style="position:absolute; top: 30%; left: 5%; font-size: 24px; font-family: 'Microsoft YaHei'">亦可赛艇</div>*@
         <div class="row">
             <div class="col-md-4"></div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4 text-right">
+            <div class="col-md-5"></div>
+            <div class="col-md-3">
                 @if (ViewBag.Login)
                 {
-                    <div style="float:left">
-                        <div></div>
-                        @{ 
-                            KeyValuePair<int, int> lvKVP = Html.GetLevelKVP((int)ViewBag.EXP);
-                            int level = lvKVP.Key;
-                            int nlEXP = lvKVP.Value;
-                        }
-                        <div>我的等级：@level</div>
-                        <div>经验值：@ViewBag.EXP/@nlEXP</div>
+                    <div style="float:left" id="DivCard" uid="@ViewBag.CurrentUserID">
+                        
                     </div>
                     <div style="float:right">
-                        <div style="height: 50px; line-height: 50px">
+                        <div style="height: 50px; line-height: 50px; text-align:center">
                             @if (ViewBag.ShowSignIn)
                             {
                                 <button id="BtnSignIn" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> 签到</button>
                             }
-                            else
+                            else 
                             {
                                 <span>已签到</span>
                             }
@@ -64,7 +57,7 @@
 </div>
 <input id="ValPageSize" type="hidden" value="30" />
 <div class="row">
-    <div id="NewBeePage" class="col-md-12">
+    <div id="NewBeePage" class="col-md-12" style="position:relative">
     </div>
 </div>
 <hr />

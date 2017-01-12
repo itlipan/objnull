@@ -4,10 +4,14 @@
 @{
     List<NewBee> NewBeeList = ViewBag.NewBeeList as List<NewBee>;
     List<NewBeeFloor> FirstFloors = ViewBag.FirstFloors as List<NewBeeFloor>;
+    List<NullUser> NewBeeOwners = ViewBag.NewBeeOwners as List<NullUser>;
 }
 @foreach (NewBee newBee in NewBeeList)
 {
     string userName = string.IsNullOrEmpty(newBee.Owner.Name) ? newBee.Owner.GitHubLogin : newBee.Owner.Name;
+    NullUser user = NewBeeOwners.Where(n => n.ID == newBee.OwnerID).First();
+    int exp = user.EXP == null ? 0 : user.EXP.Value;
+    string ucolor = Html.GetLevelColor(Html.GetLevelKVP(exp).Key);
     string result = "";
     string[] imgtags = new string[3];
     //提取预览内容
@@ -39,7 +43,7 @@
     <div class="row">
         <div class="col-md-2 text-left fs2">
             <span class="glyphicon glyphicon-user"></span>
-            <a href="@Url.Action("UserProfile", "Home", new { id = newBee.Owner.ID })" style="text-decoration:none" target="_blank">@userName.MaxByteLength(20)</a>
+            <a href="@Url.Action("UserProfile", "Home", new { id = newBee.Owner.ID })" style="text-decoration:none; color:@ucolor" target="_blank" class="popup">@userName.MaxByteLength(20)</a>
         </div>
         <div class="col-md-8">
             <a href="@Url.Action("NewBeeView", "Home", new { id = newBee.ID })" style="text-decoration:none;@(newBee.Top ? "color:red;" : "")" target="_blank">@newBee.Title</a>
@@ -71,3 +75,6 @@
         </div>
     </div>
 }
+<div class="popup popup2" style="display:none;position:absolute">
+    fsdfsdfsd
+</div>

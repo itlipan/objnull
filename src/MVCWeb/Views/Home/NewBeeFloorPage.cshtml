@@ -2,10 +2,15 @@
 @using MVCWeb.Model.Models;
 @{
     List<NewBeeFloor> NewBeeFloorList = ViewBag.NewBeeFloorList as List<NewBeeFloor>;
+    List<NullUser> NewBeeFloorOwners = ViewBag.NewBeeFloorOwners as List<NullUser>;
 }
 
 @foreach (NewBeeFloor floor in NewBeeFloorList)
 {
+    NullUser user = NewBeeFloorOwners.Where(n => n.ID == floor.OwnerID).First();
+    int exp = user.EXP == null ? 0 : user.EXP.Value;
+    string ucolor = Html.GetLevelColor(Html.GetLevelKVP(exp).Key);
+
     if (floor.Delete)
     {
         <hr />
@@ -24,7 +29,7 @@
                 <img class="img-rounded" style="max-width: 96px" src="@floor.Owner.AvatarUrl&s=96" alt="@userName" title="@userName">
             </a>
             <div class="fs2" style="margin-top:5px;">
-                <a href="@Url.Action("UserProfile", "Home", new { id = floor.Owner.ID })" target="_blank">@userName.MaxByteLength(20)</a>
+                <a href="@Url.Action("UserProfile", "Home", new { id = floor.Owner.ID })" target="_blank" style="color: @ucolor">@userName.MaxByteLength(20)</a>
             </div>
         </div>
         <div class="col-md-8 mdv" id="Comment@(floor.Order)" cmid="@floor.ID">

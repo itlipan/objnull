@@ -200,5 +200,39 @@ namespace MVCWeb
             }
             return new KeyValuePair<int, int>(level, nlexp);
         }
+
+        /// <summary>
+        /// 获取等级颜色
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public static string GetLevelColor(this HtmlHelper html, int level)
+        {
+            if (level <= 2)
+            {
+                return "#2c2c2c";
+            }
+            else if(level <= 4)
+            {
+                return "#1296db";
+            }
+            else if (level <= 6)
+            {
+                return "#0cc238";
+            }
+            else if (level <= 8)
+            {
+                return "#ea8f09";
+            }
+            else if (level <= 10)
+            {
+                return "#d81e06";
+            }
+            else
+            {
+                return "#e40ad3";
+            }
+        }
     }
 }
