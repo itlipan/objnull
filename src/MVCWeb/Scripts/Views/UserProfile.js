@@ -37,7 +37,7 @@ function UserBlogPage(index) {
             $(".BlogInfo").each(function () {
                 $(this).hover(function () {
                     $(this).find("#TxtModify").show();
-                    $(this).css("background", "#f9f9f9")
+                    $(this).css("background", "#D9EDF7")
                 }, function () {
                     $(this).find("#TxtModify").hide();
                     $(this).css("background", "#ffffff")
@@ -102,7 +102,7 @@ function UserNewBeePage(index) {
             $(".NewBeeInfo").each(function () {
                 $(this).hover(function () {
                     $(this).find("#TxtModify").show();
-                    $(this).css("background", "#f9f9f9")
+                    $(this).css("background", "#D9EDF7")
                 }, function () {
                     $(this).find("#TxtModify").hide();
                     $(this).css("background", "#ffffff")
@@ -167,7 +167,7 @@ function UserStarPage(index, type) {
             $(".StarInfo").each(function () {
                 $(this).hover(function () {
                     $(this).find("#TxtModify").show();
-                    $(this).css("background", "#f9f9f9")
+                    $(this).css("background", "#D9EDF7")
                 }, function () {
                     $(this).find("#TxtModify").hide();
                     $(this).css("background", "#ffffff")
@@ -343,18 +343,18 @@ $(function () {
     $("#BtnStar").click(function () {
         $("#UserNav li").removeClass("active");
         $(this).parent().addClass("active");
-        UserStarPage(1, 1);
+        UserStarPage(1, 2);
     });
 
     //消息
     $("#BtnMyMsg").click(function () {
         $("#UserNav li").removeClass("active");
         $(this).parent().addClass("active");
-        UserMsgPage(1, "Breply");
+        UserMsgPage(1, "Nreply");
     });
 
-    //显示姿势
-    $("#BtnBlog").click();
+    //显示社区
+    $("#BtnNewBee").click();
 
     //悬停显示修改邮箱
     $("#DivEmail").hover(function () {

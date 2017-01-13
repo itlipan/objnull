@@ -26,10 +26,10 @@
     <div class="row">
         <div class="col-md-2 text-right">
             <a href="@Url.Action("UserProfile", "Home", new { id = floor.Owner.ID })" target="_blank">
-                <img class="img-rounded" style="max-width: 96px" src="@floor.Owner.AvatarUrl&s=96" alt="@userName" title="@userName">
+                <img class="img-rounded popup" style="max-width: 96px" src="@floor.Owner.AvatarUrl&s=96" alt="@userName" title="@userName" uid="@floor.Owner.ID">
             </a>
             <div class="fs2" style="margin-top:5px;">
-                <a href="@Url.Action("UserProfile", "Home", new { id = floor.Owner.ID })" target="_blank" style="color: @ucolor">@userName.MaxByteLength(20)</a>
+                <a href="@Url.Action("UserProfile", "Home", new { id = floor.Owner.ID })" target="_blank" style="color: @ucolor" class="popup" uid="@floor.Owner.ID">@userName.MaxByteLength(20)</a>
             </div>
         </div>
         <div class="col-md-8 mdv" id="Comment@(floor.Order)" cmid="@floor.ID">
@@ -57,7 +57,7 @@
             </div>
             <div id="ReplyBox@(floor.Order)" class="row" style="display:none;padding-top:10px">
                 <div class="col-md-12">
-                    <div class="row">
+                    <div class="row" style="position: relative">
                         <div id="Replys@(floor.Order)" class="col-md-12"></div>
                     </div>
                     <div class="row">
@@ -94,3 +94,6 @@
         </div>
     </div>
 }
+<div class="popup dropdown-menu" id="DivPopup" style="display:none;width: 180px; height: 100px;">
+    加载中……
+</div>

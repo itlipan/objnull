@@ -8,7 +8,7 @@
     <div class="row NewBeeInfo" style="padding: 5px 0px">
         <div class="col-md-12" style="line-height: 25px; height:25px">
             <div style="float: left;padding: 0px 5px">
-                <a class="fs3" href="@Url.Action("NewBeeView", "Home", new { id = newBee.ID })" target="_blank" style="text-decoration:none">
+                <a href="@Url.Action("NewBeeView", "Home", new { id = newBee.ID })" target="_blank" style="text-decoration:none">
                     @newBee.Title.MaxByteLength(80)
                 </a>&nbsp;
                 @if (ViewBag.Owner)

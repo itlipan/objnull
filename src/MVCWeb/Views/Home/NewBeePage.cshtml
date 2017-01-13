@@ -43,7 +43,7 @@
     <div class="row">
         <div class="col-md-2 text-left fs2">
             <span class="glyphicon glyphicon-user"></span>
-            <a href="@Url.Action("UserProfile", "Home", new { id = newBee.Owner.ID })" style="text-decoration:none; color:@ucolor" target="_blank" class="popup">@userName.MaxByteLength(20)</a>
+            <a href="@Url.Action("UserProfile", "Home", new { id = newBee.Owner.ID })" style="text-decoration:none; color:@ucolor" target="_blank" class="popup" uid="@newBee.Owner.ID">@userName.MaxByteLength(20)</a>
         </div>
         <div class="col-md-8">
             <a href="@Url.Action("NewBeeView", "Home", new { id = newBee.ID })" style="text-decoration:none;@(newBee.Top ? "color:red;" : "")" target="_blank">@newBee.Title</a>
@@ -75,6 +75,6 @@
         </div>
     </div>
 }
-<div class="popup popup2" style="display:none;position:absolute">
-    fsdfsdfsd
+<div class="popup dropdown-menu" id="DivPopup" style="display:none;width: 180px; height: 100px;">
+    加载中……
 </div>

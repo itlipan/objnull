@@ -32,8 +32,8 @@
                 <span class="label @className" style="font-weight: 400">@Enum.GetName(typeof(EnumBlogType), blog.Type)</span>
             </div>
             <div style="float: left;padding: 0px 5px">
-                <a class="fs3" href="@Url.Action("BlogView", "Home", new { id = blog.ID })" target="_blank" style="text-decoration:none">
-                    @blog.Title.MaxByteLength(54)
+                <a href="@Url.Action("BlogView", "Home", new { id = blog.ID })" target="_blank" style="text-decoration:none">
+                    @blog.Title.MaxByteLength(70)
                 </a>&nbsp;
                 @if (ViewBag.Owner)
                 {

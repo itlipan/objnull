@@ -66,6 +66,11 @@ function NewBeeFloorPage(index) {
                 $("html,body").animate({ scrollTop: 0 }, 300)
             }
             FirstLoad = false;
+
+            HoverPopup(popupTimeout, "popup", "DivPopup", function (item) {
+                $("#DivPopup").css("top", item.parent().parent().parent().position().top + 120);
+            });
+
             if (parseInt($("#TotalCount").val()) <= pageSize) {
                 return;
             }
@@ -179,6 +184,11 @@ function GetCommentReplyPage(index, corder) {
                     $(this).find("#BtnReply").hide();
                 });
             });
+
+            HoverPopup(popupTimeout2, "popup2", "DivPopup" + corder, function (item) {
+                $("#DivPopup" + corder).css("top", item.parent().parent().parent().position().top - 110);
+            });
+
             var totalCount = parseInt($("#ReplyTotalCount" + corder).val());
             if (totalCount <= pageSize) {
                 return;

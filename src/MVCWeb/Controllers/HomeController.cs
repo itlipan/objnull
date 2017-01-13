@@ -265,7 +265,7 @@ namespace MVCWeb.Controllers
         //用户卡
         public ActionResult UserCard(Guid userID)
         {
-            ViewBag.Owner = userID == CurrentUser.ID;
+            ViewBag.Owner = CurrentUser == null ? false : userID == CurrentUser.ID;
             ViewBag.CheckUser = NullUserDataSvc.GetByID(userID);
             return View();
         }

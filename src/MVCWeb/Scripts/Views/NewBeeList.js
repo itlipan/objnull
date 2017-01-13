@@ -1,4 +1,4 @@
-﻿var popupTimeout = null;
+﻿
 //NewBeePage
 function NewBeePage(index) {
     var pageSize = parseInt($("#ValPageSize").val());
@@ -9,20 +9,9 @@ function NewBeePage(index) {
         data: postData,
         success: function (result) {
             $("#NewBeePage").html(result);
-            $('.popup').bind('mouseenter', function () {
-                window.clearTimeout(popupTimeout);
-                if ($(this).attr("href") != null) {
-                    $(".popup2").css("top", $(this).parent().parent().position().top + 20);
-                    $(".popup2").show();
-                }
+            HoverPopup(popupTimeout, "popup", "DivPopup", function (item) {
+                $("#DivPopup").css("top", item.parent().parent().position().top + 20);
             });
-
-            $('.popup').bind('mouseleave', function () {
-                popupTimeout = window.setTimeout(function () {
-                    $('.popup2').hide();
-                }, 1000);
-            });
-
             var total = parseInt($("#TotalCount").val());
             if (total <= pageSize) {
                 return;
@@ -51,23 +40,11 @@ function InsertAtCaret(id, val) {
     $txt.val(textAreaTxt.substring(0, caretPos) + val + textAreaTxt.substring(caretPos));
 }
 
-//获取用户资料卡
-function GetUserCard(uid) {
-    $.ajax({
-        url: "/Home/UserCard?userID=" + uid,
-        type: "get",
-        dataType: "html",
-        success: function (html) {
-            $("#DivCard").html(html);
-        }
-    });
-}
-
 $(function () {
     $("#PreBox").hide();
     NewBeePage(1);
     if ($("#DivCard").attr("uid") != null) {
-        GetUserCard($("#DivCard").attr("uid"));
+        GetUserCard($("#DivCard").attr("uid"), "DivCard");
     }
 
     //代码高亮插件
@@ -197,7 +174,7 @@ $(function () {
                 $("#BtnSignIn").attr("disabled", false);
                 if (result.msg == "done") {
                     $("#BtnSignIn").parent().html("<span>已签到</span>");
-                    GetUserCard($("#DivCard").attr("uid"));
+                    GetUserCard($("#DivCard").attr("uid"), "DivCard");
                 } else {
                     swal(result.msg);
                 }

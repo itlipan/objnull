@@ -189,6 +189,7 @@
     <Content Include="Images\favicon-96x96.png" />
     <Content Include="Images\Index\TreeNewBee.png" />
     <Content Include="Images\Index\ZhangZiShi.png" />
+    <Content Include="Images\Loading.svg" />
     <Content Include="Images\LOGO.png" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />

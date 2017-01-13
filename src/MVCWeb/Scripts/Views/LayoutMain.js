@@ -36,6 +36,39 @@ function FavoriteSite() {
     }
 }
 
+//获取用户资料卡
+function GetUserCard(uid, cardid) {
+    $("#" + cardid).html("<img src=\"/Images/Loading.svg\" style=\"margin: 30px 70px\" />");
+    $.ajax({
+        url: "/Home/UserCard?userID=" + uid,
+        type: "get",
+        dataType: "html",
+        success: function (html) {
+            $("#" + cardid).html(html);
+        }
+    });
+}
+
+//悬停显示个人信息
+var popupTimeout = null;
+var popupTimeout2 = null;
+function HoverPopup(pto, popcls, popid, setpos) {
+    $("." + popcls).bind("mouseenter", function () {
+        window.clearTimeout(pto);
+        if ($(this).attr("id") != popid) {
+            setpos($(this));
+            GetUserCard($(this).attr("uid"), popid);
+            $("#" + popid).show();
+        }
+    });
+
+    $("." + popcls).bind("mouseleave", function () {
+        pto = window.setTimeout(function () {
+            $("#" + popid).hide();
+        }, 1000);
+    });
+}
+
 var MsgHub;
 //发送更新消息
 function SendNewMsg(id) {

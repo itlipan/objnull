@@ -6,8 +6,8 @@
 <div class="row">
     <div class="col-md-2">
         <ul class="nav nav-pills nav-stacked text-center">
-            <li class="@(ViewBag.Type == (int)EnumObjectType.博客 ? "active" : "")"><a href="javascript:;" onclick="UserStarPage(1, @((int)EnumObjectType.博客))">姿势</a></li>
-            <li class="@(ViewBag.Type == (int)EnumObjectType.社区 ? "active" : "")"><a href="javascript:;" onclick="UserStarPage(1, @((int)EnumObjectType.社区))">NewBee</a></li>
+            <li class="@(ViewBag.Type == (int)EnumObjectType.社区 ? "active" : "")"><a href="javascript:;" onclick="UserStarPage(1, @((int)EnumObjectType.社区))">@Enum.GetName(typeof(EnumObjectType), EnumObjectType.社区)</a></li>
+            <li class="@(ViewBag.Type == (int)EnumObjectType.博客 ? "active" : "")"><a href="javascript:;" onclick="UserStarPage(1, @((int)EnumObjectType.博客))">@Enum.GetName(typeof(EnumObjectType), EnumObjectType.博客)</a></li>
         </ul>
     </div>
     <div class="col-md-10">
@@ -30,7 +30,7 @@
                     <div class="row StarInfo" style="padding: 5px 0px">
                         <div class="col-md-12">
                             <div style="float:left">
-                                <a class="fs3" href="@StarUrl/@star.ObjID" target="_blank" style="text-decoration:none">@star.Title.MaxByteLength(70)</a>
+                                <a href="@StarUrl/@star.ObjID" target="_blank" style="text-decoration:none">@star.Title.MaxByteLength(70)</a>
                                 &nbsp;
                                 <span style="display:none" id="TxtModify">
                                     <a href="javascript:;" onclick="StarDelete('@star.ID', @ViewBag.CurrentPage, @ViewBag.Type)">删</a>

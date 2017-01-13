@@ -3,6 +3,35 @@
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
     NullUser User = ViewBag.User as NullUser;
     ViewBag.Title = User.GitHubLogin + (string.IsNullOrEmpty(User.Name) ? "" : "(" + User.Name + ")");
+
+    int exp = User.EXP == null ? 0 : User.EXP.Value;
+    KeyValuePair<int, int> lvKVP = Html.GetLevelKVP(exp);
+    int level = lvKVP.Key;
+    string lvimg = "1";
+    if (level <= 2)
+    {
+        lvimg = "1";
+    }
+    else if (level <= 4)
+    {
+        lvimg = "2";
+    }
+    else if (level <= 6)
+    {
+        lvimg = "3";
+    }
+    else if (level <= 8)
+    {
+        lvimg = "4";
+    }
+    else if (level <= 10)
+    {
+        lvimg = "5";
+    }
+    else
+    {
+        lvimg = "6";
+    }
 }
 @section head{
     <!--simplePagination-->
@@ -44,7 +73,7 @@
         {
             <div style="padding-bottom: 5px; display:none" id="DivEmailEdit">
                 <span class="glyphicon glyphicon-envelope"></span>&nbsp;
-                <input type="text" id="TxtNewEmail" style="width: 150px" />
+                <input type="text" id="TxtNewEmail" style="width: 150px; display: inline" class="form-control" />
                 <button id="BtnSetEmail" class="btn btn-success btn-sm" onclick="SetNewEmail()">√</button>
                 <button class="btn btn-danger btn-sm" onclick="EmailCancelEdit()">×</button>
             </div>
@@ -53,9 +82,13 @@
             <span class="glyphicon glyphicon-time"></span>&nbsp;
             <span>@User.InsertDate.ToString("yyyy-MM-dd") 加入</span>
         </div>
-        <div>
-            <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;
-            <span><span id="TxtProCount">@User.ProCount</span> 个赞</span>
+        <div style="height: 25px">
+            <div style="float:left;">
+                <img src="~/Images/Lv/lv@(lvimg).png" width="20" height="17" style="width: 20px; height: 17px" />
+            </div>
+            <div style="float:left;padding-top: 4px;color: @Html.GetLevelColor(level)">Lv @level</div>
+            <div style="float:left;padding-top: 4px;margin-left: 20px"><span class="glyphicon glyphicon-thumbs-up"></span></div>
+            <div style="float:left;padding-top: 3px;margin-left: 5px"><span id="TxtProCount">@User.ProCount</span> 个赞</div>
         </div>
         <hr style="margin-top: 16px; margin-bottom: 16px" />
         <div style="padding-bottom: 16px">
@@ -86,17 +119,17 @@
                 @if (!ViewBag.Owner)
                 {
                     <ul class="nav nav-tabs" id="UserNav">
-                        <li><a id="BtnBlog" href="javascript:;">Tade 姿势</a></li>
-                        <li><a id="BtnNewBee" href="javascript:;">Tade NewBee</a></li>
+                        <li><a id="BtnNewBee" href="javascript:;">@Enum.GetName(typeof(EnumObjectType), EnumObjectType.社区)</a></li>
+                        <li><a id="BtnBlog" href="javascript:;">@Enum.GetName(typeof(EnumObjectType), EnumObjectType.博客)</a></li>
                     </ul>
                 }
                 else
                 {
                     <ul class="nav nav-tabs nav-justified" id="UserNav">
-                        <li><a id="BtnBlog" href="javascript:;">Word 姿势</a></li>
-                        <li><a id="BtnNewBee" href="javascript:;">Word NewBee</a></li>
-                        <li><a id="BtnStar" href="javascript:;">Word 收藏</a></li>
-                        <li><a id="BtnMyMsg" href="javascript:;">Word 动态</a></li>
+                        <li><a id="BtnNewBee" href="javascript:;">@Enum.GetName(typeof(EnumObjectType), EnumObjectType.社区)</a></li>
+                        <li><a id="BtnBlog" href="javascript:;">@Enum.GetName(typeof(EnumObjectType), EnumObjectType.博客)</a></li>
+                        <li><a id="BtnStar" href="javascript:;">收藏</a></li>
+                        <li><a id="BtnMyMsg" href="javascript:;">动态</a></li>
                     </ul>
                 }
             </div>
