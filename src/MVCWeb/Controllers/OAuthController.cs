@@ -149,8 +149,8 @@ namespace MVCWeb.Controllers
             {
                 FormUrlEncodedContent postData = new FormUrlEncodedContent(new[]
                 {
-                    new KeyValuePair<string, string>("client_id", "b89774f9a3a874e349ce"),
-                    new KeyValuePair<string, string>("client_secret", "a225b95faff4466fbf7948c3d1f4c229e5fccdd9"),
+                    new KeyValuePair<string, string>("client_id", "24a08f126aa24d86e657"),
+                    new KeyValuePair<string, string>("client_secret", "805d2eb428a9f63d1235a9627d974e738851d05f"),
                     new KeyValuePair<string, string>("code", code)
                 });
                 hc.DefaultRequestHeaders.Add("Accept", "application/json");

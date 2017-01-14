@@ -185,7 +185,7 @@ function GetCommentReplyPage(index, corder) {
                 });
             });
 
-            HoverPopup(popupTimeout2, "popup2", "DivPopup" + corder, function (item) {
+            HoverPopup(popupTimeout2, "popup" + corder, "DivPopup" + corder, function (item) {
                 $("#DivPopup" + corder).css("top", item.parent().parent().parent().position().top - 110);
             });
 

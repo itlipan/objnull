@@ -24,7 +24,7 @@
     <div class="col-md-9">
         <div style="float:left;width:120px">谈笑风生</div>
         <div style="float:left; margin-left: 10px; width:400px">置顶</div>
-        <div style="float:left; margin-left: 10px; width:300px">等级排行</div>
+        <div style="float:left; margin-left: 10px; width:300px"><a href="@Url.Action("UserRange", "Home")" target="_blank">等级排行</a></div>
     </div>
     <div class="col-md-3 text-right">Ctrl+D</div>
 </div>
@@ -45,17 +45,22 @@
                             break;
                         }
                         <div style="width: 200px; height: 20px; overflow:hidden; float:left">
-                            @i&nbsp;<a href="@Url.Action("NewBeeView", "Home", new { id = nb.ID })">@nb.Title.MaxByteLength(24)</a>
+                            >&nbsp;<a href="@Url.Action("NewBeeView", "Home", new { id = nb.ID })">@nb.Title.MaxByteLength(24)</a>
                         </div>
                     }
                 </div>
-                <div style="float: left; margin-left: 10px; width: 300px">
+                <div style="float: left; margin-left: 10px; width: 300px; position: relative;">
                     @foreach (NullUser user in TopTenUser)
                     {
-                        <div style="width: 150px; height: 20px; overflow:hidden; float:left">
-
+                        string userName = string.IsNullOrEmpty(user.Name) ? user.GitHubLogin : user.Name;
+                        int exp = user.EXP == null ? 0 : user.EXP.Value;
+                        <div style="height: 20px; overflow:hidden; float:left; padding-right: 10px">
+                            <a href="@Url.Action("UserProfile", "Home", new { id = user.ID })" style="text-decoration:none;color:@Html.GetLevelColor(Html.GetLevelKVP(exp).Key)" target="_blank" class="popup2" uid="@user.ID">@userName.MaxByteLength(20)</a>
                         </div>
                     }
+                    <div class="popup2 dropdown-menu" id="DivPopup2" style="display:none;width: 180px; height: 100px;">
+                        加载中……
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
@@ -82,7 +87,9 @@
                 }
                 else
                 {
-
+                    <div style="height: 100px; line-height: 100px; text-align: center">
+                        <a class="btn btn-success" href="https://github.com/login/oauth/authorize?client_id=24a08f126aa24d86e657&redirect_uri=http://objnull.com/OAuth/GitHubLogin&scope=user,public_repo&state=12345">Github登录</a>
+                    </div>
                 }
             </div>
         </div>

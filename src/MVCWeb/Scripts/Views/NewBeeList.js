@@ -46,6 +46,11 @@ $(function () {
         GetUserCard($("#DivCard").attr("uid"), "DivCard");
     }
 
+    HoverPopup(popupTimeout2, "popup2", "DivPopup2", function (item) {
+        $("#DivPopup2").css("top", item.parent().position().top + 20);
+        $("#DivPopup2").css("left", item.parent().position().left);
+    });
+
     //代码高亮插件
     marked.setOptions({
         highlight: function (code) {

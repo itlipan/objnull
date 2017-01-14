@@ -29,13 +29,13 @@
         <div class="ReplyBar col-md-12 fs2">
             <div style="float:left;">
                 <a href="@Url.Action("UserProfile", "Home", new { id = reply.OwnerID })" target="_blank" style="text-decoration:none">
-                    <img class="img-rounded popup2" style="max-width: 32px" src="@reply.Owner.AvatarUrl&s=32" height="32" width="32" alt="@userName" title="@userName" uid="@reply.OwnerID">
+                    <img class="img-rounded popup@(ViewBag.COrder)" style="max-width: 32px" src="@reply.Owner.AvatarUrl&s=32" height="32" width="32" alt="@userName" title="@userName" uid="@reply.OwnerID">
                 </a>
             </div>
             <div style="padding-left:40px">
                 <span>
-                    <a href="@Url.Action("UserProfile", "Home", new { id = reply.Owner.ID })" target="_blank" style="color: @oucolor" class="popup2" uid="@reply.OwnerID">@userName.MaxByteLength(20)</a>&nbsp;回复
-                    <a href="@Url.Action("UserProfile", "Home", new { id = reply.ToUserID })" target="_blank" style="color: @tucolor" class="popup2" uid="@reply.ToUserID">@toUserName.MaxByteLength(20)</a>&nbsp;
+                    <a href="@Url.Action("UserProfile", "Home", new { id = reply.Owner.ID })" target="_blank" style="color: @oucolor" class="popup@(ViewBag.COrder)" uid="@reply.OwnerID">@userName.MaxByteLength(20)</a>&nbsp;回复
+                    <a href="@Url.Action("UserProfile", "Home", new { id = reply.ToUserID })" target="_blank" style="color: @tucolor" class="popup@(ViewBag.COrder)" uid="@reply.ToUserID">@toUserName.MaxByteLength(20)</a>&nbsp;
                     <span title="回复时间"><span class="glyphicon glyphicon-time"></span>@reply.InsertDate.ToBlurDate()</span>&nbsp;
                     @if (ViewBag.Login && ViewBag.CUID == reply.OwnerID)
                     {
@@ -58,6 +58,6 @@
     <div id="ReplyPager@(ViewBag.COrder)" class="col-md-12 text-center" style="margin: -15px 0px">
     </div>
 </div>
-<div class="popup2 dropdown-menu" id="DivPopup@(ViewBag.COrder)" style="display:none;width: 180px; height: 100px;">
+<div class="popup@(ViewBag.COrder) dropdown-menu" id="DivPopup@(ViewBag.COrder)" style="display:none;width: 180px; height: 100px;">
     加载中……
 </div>

@@ -141,7 +141,7 @@
                                     <div style="float:left">
                                         <span class="fs2">我在<a href="@Url.Action("NewBeeView", "Home", new { id = comment.NewBeeID })" target="_blank">&nbsp;@comment.NewBee.Title.MaxByteLength(30)</a>中回复：</span>
                                         <a href="@Url.Action("NewBeeView", "Home", new { id = comment.NewBeeID, co = comment.Order })" target="_blank" style="text-decoration:none">
-                                            @Html.Raw(string.IsNullOrEmpty(result) ? "图片" : result)
+                                            @Html.Raw(string.IsNullOrEmpty(result.Trim()) ? "图片" : result)
                                         </a>
                                     </div>
                                     <div class="fs2" style="float:right">

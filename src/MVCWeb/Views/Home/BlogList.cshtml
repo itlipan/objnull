@@ -8,16 +8,15 @@
     <!--Page-->
     <script src="~/Scripts/Views/BlogList.js"></script>
 }
-<div class="row">
-    <div class="col-md-6">在这里分享你的姿势，我是资瓷的。</div>
-    <div class="col-md-6 text-right"><a href="javascript:;" title="我叫你一声" onclick="FavoriteSite()">你敢点一下吗</a></div>
-</div>
 <div class="row" style="padding-bottom: 15px">
+    <div class="col-md-12">亦可赛艇</div>
+</div>
+@*<div class="row" style="padding-bottom: 15px">
     <div class="col-md-12" style="height: 100px;">
         <iframe src="~/StaticHtml/Page2/index.html" frameborder="0" height="100%" width="100%" scrolling="no"></iframe>
         <div style="position:absolute; top: 30%; left: 5%; font-size: 24px; font-family: 'Microsoft YaHei'">高到哪里去了</div>
     </div>
-</div>
+</div>*@
 <div class="row" style="padding-bottom: 15px">
     <div class="col-md-6">
         <ul class="nav nav-pills" id="NavOrder">
@@ -29,7 +28,7 @@
     <div class="col-md-6 text-right" style="height: 40px; line-height: 40px">
         @if (ViewBag.Login)
         {
-            <a class="btn btn-success" href="@Url.Action("BlogNew", "Home")"><span class="glyphicon glyphicon-pencil"></span>写@(Enum.GetName(typeof(EnumObjectType), EnumObjectType.博客))</a>
+            <a class="btn btn-success" href="@Url.Action("BlogNew", "Home")"><span class="glyphicon glyphicon-pencil"></span>&nbsp;写@(Enum.GetName(typeof(EnumObjectType), EnumObjectType.博客))</a>
         }
     </div>
 </div>

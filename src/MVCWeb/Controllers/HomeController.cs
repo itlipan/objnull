@@ -31,8 +31,9 @@ namespace MVCWeb.Controllers
         //首页
         public ActionResult Index()
         {
-            ViewBag.Login = CurrentUser != null;
-            return View();
+            return RedirectToAction("NewBeeList");
+            //ViewBag.Login = CurrentUser != null;
+            //return View();
         }
 
         #region UserInfo
@@ -820,7 +821,7 @@ namespace MVCWeb.Controllers
 
             int pageNum = 1;
             int totalCount = 0;
-            ViewBag.TopTenUser = NullUserDataSvc.GetPagedEntitys(ref pageNum, 10, u => true, u => u.EXP, true, out totalCount).ToList();
+            ViewBag.TopTenUser = NullUserDataSvc.GetPagedEntitys(ref pageNum, 20, u => true, u => u.EXP, true, out totalCount).ToList();
 
             return View();
         }
@@ -1337,6 +1338,15 @@ namespace MVCWeb.Controllers
         }
 
         #endregion
+
+        //用户排行
+        public ActionResult UserRange()
+        {
+            int pageNum = 1;
+            int totalCount = 0;
+            ViewBag.TopUserList = NullUserDataSvc.GetPagedEntitys(ref pageNum, 100, u => true, u => u.EXP, true, out totalCount).ToList();
+            return View();
+        }
 
         //关于
         public ActionResult About()

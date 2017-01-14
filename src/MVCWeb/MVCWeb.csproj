@@ -315,6 +315,7 @@
     <Content Include="Views\Home\FeedbackPage.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\UserCard.cshtml" />
+    <Content Include="Views\Home\UserRange.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
