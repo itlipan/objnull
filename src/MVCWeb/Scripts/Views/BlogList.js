@@ -27,7 +27,7 @@ function JqueryPage(index) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination",
-                hrefTextPrefix: "javascript:;",
+                
                 onPageClick: function (pageNumber, event) {
                     JqueryPage(pageNumber, order);
                 }

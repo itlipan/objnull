@@ -45,7 +45,7 @@ function UserPage(index) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination-sm",
-                hrefTextPrefix: "javascript:;",
+                
                 onPageClick: function (pageNumber, event) {
                     UserPage(pageNumber);
                 }
@@ -106,7 +106,7 @@ function BlogPage(index) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination-sm",
-                hrefTextPrefix: "javascript:;",
+                
                 onPageClick: function (pageNumber, event) {
                     BlogPage(pageNumber);
                 }
@@ -180,7 +180,6 @@ function NewBeePage(index) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination-sm",
-                hrefTextPrefix: "javascript:;",
                 onPageClick: function (pageNumber, event) {
                     NewBeePage(pageNumber);
                 }

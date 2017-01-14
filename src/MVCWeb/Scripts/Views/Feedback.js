@@ -19,7 +19,7 @@ function FeedbackPage(index) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination",
-                hrefTextPrefix: "javascript:;",
+                
                 onPageClick: function (pageNumber, event) {
                     FeedbackPage(pageNumber);
                 }

@@ -815,6 +815,13 @@ namespace MVCWeb.Controllers
 
                 ViewBag.CurrentUserID = CurrentUser.ID;
             }
+
+            ViewBag.TopNewBeeList = NewBeeDataSvc.GetByCondition(n => n.Top).ToList();
+
+            int pageNum = 1;
+            int totalCount = 0;
+            ViewBag.TopTenUser = NullUserDataSvc.GetPagedEntitys(ref pageNum, 10, u => true, u => u.EXP, true, out totalCount).ToList();
+
             return View();
         }
 
@@ -866,11 +873,11 @@ namespace MVCWeb.Controllers
         {
             int totalCount = 0;
             List<NewBee> newBeeList = NewBeeDataSvc.GetPagedEntitys(ref pageNum, pageSize, it => !it.Top, it => it.LastFloorDate, true, out totalCount).ToList();
-            if(pageNum == 1)
-            {
-                List<NewBee> topNewBee = NewBeeDataSvc.GetByCondition(n => n.Top).ToList();
-                newBeeList = topNewBee.Concat(newBeeList).OrderByDescending(n => n.Top).ThenByDescending(n => n.LastFloorDate).ToList();
-            }
+            //if(pageNum == 1)
+            //{
+            //    List<NewBee> topNewBee = NewBeeDataSvc.GetByCondition(n => n.Top).ToList();
+            //    newBeeList = topNewBee.Concat(newBeeList).OrderByDescending(n => n.Top).ThenByDescending(n => n.LastFloorDate).ToList();
+            //}
             ViewBag.NewBeeList = newBeeList;
             ViewBag.TotalCount = totalCount;
             ViewBag.CurrentPage = pageNum;

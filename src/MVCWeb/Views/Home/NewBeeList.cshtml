@@ -1,7 +1,9 @@
-﻿
+﻿@using MVCWeb.Model.Models
 @{
-    ViewBag.Title = Enum.GetName(typeof(EnumObjectType), EnumObjectType.社区) + " - 开源Github用户社区";
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    ViewBag.Title = Enum.GetName(typeof(EnumObjectType), EnumObjectType.社区) + " - 开源Github用户社区";
+    List<NewBee> TopNewBeeList = ViewBag.TopNewBeeList as List<NewBee>;
+    List<NullUser> TopTenUser = ViewBag.TopTenUser as List<NullUser>;
 }
 @section head{
     <!--fileupload-->
@@ -19,21 +21,48 @@
     <script src="~/Scripts/Views/NewBeeList.js"></script>
 }
 <div class="row">
-    <div class="col-md-6">在这里谈笑风生。</div>
-    <div class="col-md-6 text-right"><a href="javascript:;" title="我叫你一声" onclick="FavoriteSite()">你敢点一下吗</a></div>
+    <div class="col-md-9">
+        <div style="float:left;width:120px">谈笑风生</div>
+        <div style="float:left; margin-left: 10px; width:400px">置顶</div>
+        <div style="float:left; margin-left: 10px; width:300px">等级排行</div>
+    </div>
+    <div class="col-md-3 text-right">Ctrl+D</div>
 </div>
 <div class="row" style="padding-bottom: 15px">
     <div class="col-md-12" style="height: 100px;">
-        @*<iframe src="~/StaticHtml/Page1/index.html" frameborder="0" height="100%" width="100%" scrolling="no"></iframe>
-            <div style="position:absolute; top: 30%; left: 5%; font-size: 24px; font-family: 'Microsoft YaHei'">亦可赛艇</div>*@
         <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-5"></div>
+            <div class="col-md-9">
+                <div style="float:left; width: 120px">
+                    <iframe src="~/StaticHtml/Page3/index.html" frameborder="0" height="100" width="120" scrolling="no"></iframe>
+                </div>
+                <div style="float: left; margin-left: 10px; width: 400px">
+                    @{ int i = 0; }
+                    @foreach (NewBee nb in TopNewBeeList)
+                    {
+                        i++;
+                        if (i > 10)
+                        {
+                            break;
+                        }
+                        <div style="width: 200px; height: 20px; overflow:hidden; float:left">
+                            @i&nbsp;<a href="@Url.Action("NewBeeView", "Home", new { id = nb.ID })">@nb.Title.MaxByteLength(24)</a>
+                        </div>
+                    }
+                </div>
+                <div style="float: left; margin-left: 10px; width: 300px">
+                    @foreach (NullUser user in TopTenUser)
+                    {
+                        <div style="width: 150px; height: 20px; overflow:hidden; float:left">
+
+                        </div>
+                    }
+                </div>
+            </div>
             <div class="col-md-3">
                 @if (ViewBag.Login)
                 {
                     <div style="float:left" id="DivCard" uid="@ViewBag.CurrentUserID">
-                        
+
                     </div>
                     <div style="float:right">
                         <div style="height: 50px; line-height: 50px; text-align:center">
@@ -41,7 +70,7 @@
                             {
                                 <button id="BtnSignIn" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> 签到</button>
                             }
-                            else 
+                            else
                             {
                                 <span>已签到</span>
                             }
@@ -50,6 +79,10 @@
                             <button id="BtnPostNew" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span> 发帖</button>
                         </div>
                     </div>
+                }
+                else
+                {
+
                 }
             </div>
         </div>

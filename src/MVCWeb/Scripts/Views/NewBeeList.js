@@ -23,7 +23,6 @@ function NewBeePage(index) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination",
-                hrefTextPrefix: "javascript:;",
                 onPageClick: function (pageNumber, event) {
                     NewBeePage(pageNumber);
                 }

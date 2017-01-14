@@ -54,7 +54,7 @@ function UserBlogPage(index) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination-sm",
-                hrefTextPrefix: "javascript:;",
+                
                 onPageClick: function (pageNumber, event) {
                     UserBlogPage(pageNumber);
                 }
@@ -119,7 +119,7 @@ function UserNewBeePage(index) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination-sm",
-                hrefTextPrefix: "javascript:;",
+                
                 onPageClick: function (pageNumber, event) {
                     UserBlogPage(pageNumber);
                 }
@@ -184,7 +184,7 @@ function UserStarPage(index, type) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination-sm",
-                hrefTextPrefix: "javascript:;",
+                
                 onPageClick: function (pageNumber, event) {
                     UserStarPage(pageNumber, type);
                 }
@@ -214,7 +214,7 @@ function UserMsgPage(index, type) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination-sm",
-                hrefTextPrefix: "javascript:;",
+                
                 onPageClick: function (pageNumber, event) {
                     UserMsgPage(pageNumber, type);
                 }

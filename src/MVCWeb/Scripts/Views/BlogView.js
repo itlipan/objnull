@@ -60,7 +60,7 @@ function GetCommentPage(index) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination",
-                hrefTextPrefix: "javascript:;",
+                
                 onPageClick: function (pageNumber, event) {
                     GetCommentPage(pageNumber);
                 }
@@ -176,7 +176,7 @@ function GetCommentReplyPage(index, corder) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination-sm",
-                hrefTextPrefix: "javascript:;",
+                
                 onPageClick: function (pageNumber, event) {
                     GetCommentReplyPage(pageNumber, corder);
                 }

@@ -187,7 +187,7 @@ function DelCMsg(objID, order) {
 
 //查看评论消息
 function CheckCMsg(url, objID) {
-    DelCMsg(objID, 0);
+    //DelCMsg(objID, 0);
     window.location.href = url;
 }
 
@@ -208,7 +208,7 @@ function DelRMsg(objID, co, ro, order) {
 
 //查看回复消息
 function CheckRMsg(url, objID, co, ro) {
-    DelRMsg(objID, co, ro, 0);
+    //DelRMsg(objID, co, ro, 0);
     window.location.href = url;
 }
 
