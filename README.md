@@ -66,7 +66,8 @@ EntityFramework数据模型定义项目，包括了模型定义类和DBContext�
 * MyDBInitializer  
 该文件为数据初始化器。  
 * MyDBMapping  
-该文件为模型和表映射配置，主要是外键映射配置。  
+该文件为模型和表映射配置，主要是外键映射配置。
+
 `UpdateSQL`文件夹中文件用于记录后期手动添加表和字段的语句，发布时使用，不用关心。
 
 ### MVCWeb.DataSvc 
