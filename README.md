@@ -4,8 +4,8 @@
 
 ## 项目结构
 
-![001](img/001.jpg)  
-**MVCWeb.Redis**  
+![001](img/001.jpg)  
+* **MVCWeb.Redis**  
 Redis缓存项目，提供Redis的访问。Redis用于存储经常访问的权限控制数据，消息通知，有时效性的临时数据。  
 * **MVCWeb.Model**  
 EntityFramework数据模型定义项目，包括了模型定义类和DBContext的定义和设置。
@@ -43,7 +43,7 @@ EntityFramework数据模型定义项目，包括了模型定义类和DBContext�
 
 ## 项目介绍
 
-> **MVCWeb.Redis**  
+### MVCWeb.Redis 
 
 ![002](img/002.jpg)  
 该项目使用[StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)连接和操作Redis。  
@@ -56,7 +56,7 @@ EntityFramework数据模型定义项目，包括了模型定义类和DBContext�
 * MyRedisKeys  
 该文件为Redis中Key或Key前缀的常量定义。
 
-> **MVCWeb.Model**  
+### MVCWeb.Model  
 
 ![003](img/003.jpg)  
 `Models`文件夹中数据模型的定义。  
@@ -69,7 +69,7 @@ EntityFramework数据模型定义项目，包括了模型定义类和DBContext�
 该文件为模型和表映射配置，主要是外键映射配置。  
 `UpdateSQL`文件夹中文件用于记录后期手动添加表和字段的语句，发布时使用，不用关心。
 
-> **MVCWeb.DataSvc**  
+### MVCWeb.DataSvc 
 
 ![004](img/004.jpg)  
 `Base`文件夹中为基础数据操作的泛型接口和实现。  
@@ -89,7 +89,7 @@ EntityFramework数据模型定义项目，包括了模型定义类和DBContext�
 ```
 如有特殊的操作在此实现中添加接口和操作即可。
 
-> **MVCWeb**  
+### MVCWeb  
 
 ![008](img/008.jpg)  
 * **App_Data**文件夹中为日志文件。  
@@ -115,3 +115,5 @@ EntityFramework数据模型定义项目，包括了模型定义类和DBContext�
 * **StaticHtml**为用于展示特效的静态html页所在文件夹。
 
 其他文件或文件夹意义同默认ASP.NET MVC项目，对应功能也顾名思义，不再赘述。
+
+![haha](img/haha.png)
