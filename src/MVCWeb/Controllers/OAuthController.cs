@@ -101,21 +101,6 @@ namespace MVCWeb.Controllers
                         string key = MyRedisKeys.Pre_SysMsg + user.ID;
                         MyRedisDB.SetAdd(key, msg);
                     }
-                    //添加一篇newbee
-                    //NewBee nb = new NewBee();
-                    //nb.OwnerID = user.ID;
-                    //nb.Title = "大家好，我是" + (string.IsNullOrEmpty(user.Name) ? user.GitHubLogin : user.Name) + "，很高兴加入象空。";
-                    //nb.FloorCount = 1;
-                    //nb.LastFloorDate = DateTime.Now;
-                    //NewBeeDataSvc.Add(nb);
-
-                    //NewBeeFloor nbf = new NewBeeFloor();
-                    //nbf.MDText = "我刚刚加入象空，点击查看更多关于我的信息，如果你有兴趣可以关注我的GitHub。";
-                    //nbf.MDValue = "<p>我刚刚加入象空，点击查看更多关于我的信息，如果你有兴趣可以关注我的GitHub。</p>";
-                    //nbf.NewBeeID = nb.ID;
-                    //nbf.Order = 1;
-                    //nbf.OwnerID = user.ID;
-                    //NewBeeFloorDataSvc.Add(nbf);
                 }
                 else
                 {

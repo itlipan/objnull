@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="breathing-halftone.pkgd.js"></script>
+    <script>
+        window.onload = function () {
+            var img = document.getElementById("Img");
+            var w = document.body.clientWidth;
+            var h = document.body.clientHeight;
+            var iw = parseInt(img.width);
+            var ih = parseInt(img.height);
+            if (iw / ih > w / h)
+            {
+                img.style.width = "100%"
+            }
+            else
+            {
+                img.style.height = "100%"
+            }
+            new BreathingHalftone(img, {
+                dotSize: 1 / 40,
+                initVelocity: 0.05,
+                oscAmplitude: 0,
+                friction: 0.05,
+                channels: ['lum']
+            });
+        }
+    </script>
+</head>
+<body style="margin: 0px; text-align:center;">
+    <img id="Img" src="About.jpg"/>
+</body>
+</html>

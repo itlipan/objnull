@@ -42,10 +42,10 @@ namespace MVCWeb
         public int owned_private_repos { get; set; }
         public int disk_usage { get; set; }
         public int collaborators { get; set; }
-        public Paln plan { get; set; }
+        public Plan plan { get; set; }
     }
 
-    public class Paln
+    public class Plan
     {
         public string name { get; set; }
         public long space { get; set; }
