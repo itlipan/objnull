@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
+using System.Configuration;
 using Newtonsoft.Json;
 using MVCWeb.DataSvc.Svc;
 using MVCWeb.Model.Models;
@@ -22,6 +23,9 @@ namespace MVCWeb.Controllers
         //用户信息
         public ActionResult UserInfo()
         {
+            ViewBag.ClientID = ConfigurationManager.AppSettings["client_id"];
+            //开发用OAuth跳转至changetolocalhost.com，修改changetolocalhost.com为localhost:2221完成本地OAuth登录
+            ViewBag.Domain = ViewBag.ClientID == "24a08f126aa24d86e657" ? "objnull.com" : "changetolocalhost.com";
             if (CurrentUser != null)
             {
                 ViewBag.User = CurrentUser;
@@ -134,8 +138,8 @@ namespace MVCWeb.Controllers
             {
                 FormUrlEncodedContent postData = new FormUrlEncodedContent(new[]
                 {
-                    new KeyValuePair<string, string>("client_id", "24a08f126aa24d86e657"),
-                    new KeyValuePair<string, string>("client_secret", "805d2eb428a9f63d1235a9627d974e738851d05f"),
+                    new KeyValuePair<string, string>("client_id", ConfigurationManager.AppSettings["client_id"]),
+                    new KeyValuePair<string, string>("client_secret", ConfigurationManager.AppSettings["client_secret"]),
                     new KeyValuePair<string, string>("code", code)
                 });
                 hc.DefaultRequestHeaders.Add("Accept", "application/json");
