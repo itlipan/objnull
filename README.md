@@ -39,6 +39,11 @@ EntityFramework数据模型定义项目，包括了模型定义类和DBContext�
 ![007](img/007.jpg)  
 运行成功后，访问`http://localhost:2221/Manager/Manage`页面进行后台管理。点击`一键生成ActionRule`后就可以取消注释开启权限控制。
 
+6. **OAuth登录**  
+运行成功后点击登录会跳转至域名为`changetolocalhost.com`的一个链接，访问失败修改这个域名为`localhost:2221`后再访问该链接即可实现本地OAuth登录。  
+OAuth的用户名密码在appSettings中配置，默认使用的开发环境OAuth账号，Release版Web.config会替换为正式OAuth账号。  
+如果使用正式OAuth账号运行则需要在IIS中调试项目，并修改Host文件，让`objnull.com`重定向实现本地登录。
+
 一旦项目成功运行，具体结构和实现大家看看代码应该就能很快了解，有任何问题欢迎入群提问，下面对每个项目大概介绍一下。
 
 ## 项目介绍
@@ -103,7 +108,7 @@ EntityFramework数据模型定义项目，包括了模型定义类和DBContext�
 ![010](img/010.jpg)  
 `OAuth`文件夹中为GitHub OAuth登录所需的方法和接收数据的模型定义。  
 `BaseController.cs`为Controller的基类，提供获取当前用户和管理员的属性。  
-`Enums.cs`中为所以Enum类型的定义。  
+`Enums.cs`中为所有Enum类型的定义。  
 `Extensions.cs`中为扩展方法的定义。  
 `Principals.cs`中为实现**IPrincipal**的用户模型，用于身份认证中存储当前登录用户的信息。  
 `Utils.cs`为静态工具类，加解密方法在此。  
