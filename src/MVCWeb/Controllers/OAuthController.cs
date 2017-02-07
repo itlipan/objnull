@@ -25,7 +25,12 @@ namespace MVCWeb.Controllers
         {
             ViewBag.ClientID = ConfigurationManager.AppSettings["client_id"];
             //开发用OAuth跳转至changetolocalhost.com，修改changetolocalhost.com为localhost:2221完成本地OAuth登录
-            ViewBag.Domain = ViewBag.ClientID == "24a08f126aa24d86e657" ? "objnull.com" : "changetolocalhost.com";
+#if Debug
+            ViewBag.Domain = "changetolocalhost.com";
+#endif
+#if Release
+            ViewBag.Domain = "objnull.com";
+#endif
             if (CurrentUser != null)
             {
                 ViewBag.User = CurrentUser;
@@ -128,7 +133,7 @@ namespace MVCWeb.Controllers
             return true;
         }
 
-        #region GitHub
+#region GitHub
 
         public ActionResult GitHubLogin(string code, string state)
         {
@@ -156,6 +161,6 @@ namespace MVCWeb.Controllers
             return RedirectToAction("NewBeeList", "Home");
         }
 
-        #endregion
+#endregion
     }
 }
