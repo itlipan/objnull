@@ -95,6 +95,16 @@ namespace MVCWeb.Model.Models
         public DateTime? EXPDate { get; set; }
 
         /// <summary>
+        /// 已关注人数
+        /// </summary>
+        public int? FollowingCount { get; set; }
+
+        /// <summary>
+        /// 粉丝数
+        /// </summary>
+        public int? FollowerCount { get; set; }
+
+        /// <summary>
         /// 姿势集合
         /// </summary>
         public virtual ICollection<Blog> Blogs { get; set; }

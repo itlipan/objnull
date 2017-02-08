@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Net.Http;
 using System.Configuration;
 using Newtonsoft.Json;
+using Octokit;
 using MVCWeb.DataSvc.Svc;
 using MVCWeb.Model.Models;
 using MVCWeb.Redis.Base;
@@ -34,7 +35,7 @@ namespace MVCWeb.Controllers
             if (CurrentUser != null)
             {
                 ViewBag.User = CurrentUser;
-                ViewBag.MsgCount = MyRedisDB.RedisDB.SetLength(MyRedisKeys.Pre_CMsg + CurrentUser.ID) 
+                ViewBag.MsgCount = MyRedisDB.RedisDB.SetLength(MyRedisKeys.Pre_CMsg + CurrentUser.ID)
                     + MyRedisDB.RedisDB.SetLength(MyRedisKeys.Pre_RMsg + CurrentUser.ID) + MyRedisDB.RedisDB.SetLength(MyRedisKeys.Pre_SysMsg + CurrentUser.ID);
                 if (string.IsNullOrEmpty(HttpContext.ReadCookie("LastLogin")))
                 {
@@ -47,7 +48,7 @@ namespace MVCWeb.Controllers
             }
             return PartialView();
         }
-        
+
         [HttpPost]
         //更新账号
         public ActionResult UpdateInfo()
@@ -80,10 +81,10 @@ namespace MVCWeb.Controllers
         //添加用户或更新用户信息
         public bool UpdateUserInfo(string loginType, string token)
         {
-            if(loginType == "github")
+            if (loginType == "github")
             {
                 GitHubUser githubUser = GitHub.GetGitHubUser(token);
-                if(githubUser.id == 0)
+                if (githubUser.id == 0)
                 {
                     return false;
                 }
@@ -99,9 +100,21 @@ namespace MVCWeb.Controllers
                     user.GitHubID = githubUser.id;
                     user.Role = (int)EnumUserRole.普通;
                     user.Email = githubUser.email;
+                    user.FollowingCount = githubUser.following;
+                    user.FollowerCount = githubUser.followers;
                     NullUserDataSvc.Add(user);
 
-                    if(string.IsNullOrEmpty(user.Email))
+                    //用关注人数小于500的机器人账号关注普通用户
+                    if (user.Email == null || (user.Email != null && !user.Email.EndsWith("objnull.com")))
+                    {
+                        NullUser robot = NullUserDataSvc.GetByCondition(u => u.Email.EndsWith("objnull.com") && u.GitHubLogin.Contains("robot") && u.FollowingCount < 500).First();
+                        GitHubClient github = new GitHubClient(new ProductHeaderValue("objnulldotcom"));
+                        github.Credentials = new Credentials(robot.GitHubAccessToken);
+                        github.User.Get(robot.GitHubLogin);
+                        github.User.Followers.Follow(user.GitHubLogin);
+                    }
+
+                    if (string.IsNullOrEmpty(user.Email))
                     {
                         SysMsg msg = new SysMsg();
                         msg.Date = DateTime.Now;
@@ -119,9 +132,11 @@ namespace MVCWeb.Controllers
                     user.GitHubLogin = githubUser.login;
                     user.GitHubAccessToken = token;
                     user.Email = githubUser.email;
+                    user.FollowingCount = githubUser.following;
+                    user.FollowerCount = githubUser.followers;
                     NullUserDataSvc.Update(user);
                 }
-                
+
                 HttpContext.WriteCookie("UID", user.ID.ToString(), DateTime.Now.AddYears(3));
                 HttpContext.WriteCookie("UName", HttpUtility.UrlEncode(githubUser.name), DateTime.Now.AddYears(3));
                 HttpContext.WriteCookie("UAvatar", githubUser.avatar_url, DateTime.Now.AddYears(3));
@@ -133,7 +148,7 @@ namespace MVCWeb.Controllers
             return true;
         }
 
-#region GitHub
+        #region GitHub
 
         public ActionResult GitHubLogin(string code, string state)
         {
@@ -151,7 +166,7 @@ namespace MVCWeb.Controllers
                 HttpResponseMessage response = hc.PostAsync("https://github.com/login/oauth/access_token", postData).Result;
                 token = JsonConvert.DeserializeObject<GitHubAccessToken>(response.Content.ReadAsStringAsync().Result);
             }
-            if(token.access_token == null)
+            if (token.access_token == null)
             {
                 throw new Exception("获取token失败：code=" + code + " state=" + state);
             }
@@ -161,6 +176,6 @@ namespace MVCWeb.Controllers
             return RedirectToAction("NewBeeList", "Home");
         }
 
-#endregion
+        #endregion
     }
 }

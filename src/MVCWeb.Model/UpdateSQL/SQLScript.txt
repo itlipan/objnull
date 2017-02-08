@@ -25,3 +25,7 @@ alter table nulluser add EXP int;
 #170111
 alter table nulluser add TodayEXP int;
 alter table nulluser add EXPDate datetime;
+
+#170208
+alter table nulluser add FollowingCount int;
+alter table nulluser add FollowerCount int;
