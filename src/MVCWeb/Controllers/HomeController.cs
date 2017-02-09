@@ -31,7 +31,7 @@ namespace MVCWeb.Controllers
         //首页
         public ActionResult Index()
         {
-            return RedirectToAction("NewBeeList");
+            return RedirectToAction("Index", "Robot", null);
             //ViewBag.Login = CurrentUser != null;
             //return View();
         }

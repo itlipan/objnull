@@ -13,13 +13,13 @@
             @switch (githubEvent.EventType)
             {
                 case "CreateEvent":
-                    <span>创建了</span>
+                    <span style="color:red">创建了</span>
                     break;
                 case "WatchEvent":
                     <span>收藏了</span>
                     break;
                 case "ForkEvent":
-                    <span>Fork了</span>
+                    <span style="color: #11b40a">Fork了</span>
                     break;
                 default:
                     <span>@githubEvent.EventType</span>
