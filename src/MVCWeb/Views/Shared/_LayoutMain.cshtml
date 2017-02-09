@@ -47,6 +47,7 @@
                         </div>
                     </div>*@
                 <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("Index", "Robot")">最新动态</a></li>
                     <li><a href="@Url.Action("NewBeeList", "Home")">@(Enum.GetName(typeof(EnumObjectType), EnumObjectType.社区))</a></li>
                     <li><a href="@Url.Action("BlogList", "Home")">@(Enum.GetName(typeof(EnumObjectType), EnumObjectType.博客))</a></li>
                 </ul>
@@ -64,7 +65,7 @@
         <footer>
             <div class="row" style="font-size: 12px">
                 <div class="col-md-4 text-left">
-                    &copy; @DateTime.Now.Year - <a href="https://github.com/objnullcom/objnull" target="_blank">objnull</a>
+                    &copy; @DateTime.Now.Year - <a href="https://github.com/objnullcom/objnull" target="_blank">本站开源，欢迎贡献。</a>
                 </div>
                 <div class="col-md-4 text-center">
                     <a href="https://github.com/objnullcom" target="_blank">

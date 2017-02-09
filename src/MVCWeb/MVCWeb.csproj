@@ -248,6 +248,7 @@
     <Content Include="Scripts\Views\DataManage.js" />
     <Content Include="Scripts\Views\LayoutMain.js" />
     <Content Include="Scripts\Views\Feedback.js" />
+    <Content Include="Scripts\Views\RobotIndex.js" />
     <Content Include="Scripts\Views\NewBeeList.js" />
     <Content Include="Scripts\Views\NewBeeView.js" />
     <Content Include="Scripts\Views\UserProfile.js" />
@@ -262,6 +263,7 @@
     <Compile Include="App_Start\Autofac.cs" />
     <Compile Include="App_Start\Filters.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\RobotController.cs" />
     <Compile Include="SignalRHubs\Startup.cs" />
     <Compile Include="Assist\BaseController.cs" />
     <Compile Include="Assist\Enums.cs" />
@@ -320,6 +322,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\UserCard.cshtml" />
     <Content Include="Views\Home\UserRange.cshtml" />
+    <Content Include="Views\Robot\Index.cshtml" />
+    <Content Include="Views\Robot\GitHubEventPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

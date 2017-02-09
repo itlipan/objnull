@@ -1,0 +1,41 @@
+﻿@using MVCWeb;
+@using MVCWeb.Model.Models;
+@{
+    List<GitHubEvent> EventList = ViewBag.EventList as List<GitHubEvent>;
+}
+@foreach (GitHubEvent githubEvent in EventList)
+{
+    <hr style="margin: 5px 0px" />
+    <div class="row">
+        <div class="col-md-12" style="line-height: 32px">
+            <a href="https://github.com/@githubEvent.GitHubLogin/" target="_blank"><img src="@(githubEvent.AvatarUrl)v=3&s=32" width="32" height="32" /></a>&nbsp;&nbsp;
+            <a href="https://github.com/@githubEvent.GitHubLogin/" target="_blank">@githubEvent.GitHubLogin</a>&nbsp;&nbsp;
+            @switch (githubEvent.EventType)
+            {
+                case "CreateEvent":
+                    <span>创建了</span>
+                    break;
+                case "WatchEvent":
+                    <span>收藏了</span>
+                    break;
+                case "ForkEvent":
+                    <span>Fork了</span>
+                    break;
+                default:
+                    <span>@githubEvent.EventType</span>
+                    break;
+            }&nbsp;&nbsp;
+            <a href="https://github.com/@githubEvent.RepoName/" target="_blank">@githubEvent.RepoName</a>&nbsp;&nbsp;
+            <span style="display:inline-block; float: right">@githubEvent.CreateDate</span>
+        </div>
+    </div>
+}
+<input type="hidden" id="TotalCount" value="@ViewBag.TotalCount" />
+<input type="hidden" id="CurrentPage" value="@ViewBag.CurrentPage" />
+@if (ViewBag.ShowPager)
+{
+    <div class="row" style="margin-bottom: -20px">
+        <div id="EventPager" class="col-md-8 col-md-offset-2 text-center">
+        </div>
+    </div>
+}

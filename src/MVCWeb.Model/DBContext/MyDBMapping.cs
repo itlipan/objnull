@@ -103,4 +103,13 @@ namespace MVCWeb.Model.DBContext
             HasKey(that => that.ID);
         }
     }
+
+    public class GitHubEventMapping : EntityTypeConfiguration<GitHubEvent>
+    {
+        public GitHubEventMapping()
+        {
+            ToTable("GitHubEvent");
+            HasKey(that => that.ID);
+        }
+    }
 }

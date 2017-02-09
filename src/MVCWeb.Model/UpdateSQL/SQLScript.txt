@@ -29,3 +29,15 @@ alter table nulluser add EXPDate datetime;
 #170208
 alter table nulluser add FollowingCount int;
 alter table nulluser add FollowerCount int;
+
+#170209
+CREATE TABLE githubevent
+(ID VARCHAR(20),
+GitHubLogin VARCHAR(50),
+AvatarUrl VARCHAR(200),
+CreateDate DATETIME,
+EventType VARCHAR(20),
+RepoName VARCHAR(100)
+);
+
+alter table githubevent add Robot varchar(20);

@@ -112,6 +112,8 @@ namespace MVCWeb.Controllers
                         github.Credentials = new Credentials(robot.GitHubAccessToken);
                         github.User.Get(robot.GitHubLogin);
                         github.User.Followers.Follow(user.GitHubLogin);
+                        robot.FollowingCount += 1;
+                        NullUserDataSvc.Update(robot);
                     }
 
                     if (string.IsNullOrEmpty(user.Email))

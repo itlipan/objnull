@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "最新动态 - 象空网";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+@section head{
+    <!--simplePagination-->
+    <script src="~/Scripts/SimplePagination/jquery.simplePagination.js"></script>
+    <!--Page-->
+    <script src="~/Scripts/Views/RobotIndex.js"></script>
+}
+<div class="row">
+    <div class="col-md-12" style="line-height: 32px">
+        以下是当前网站用户最新动态，后续会加入GitHub热门中国用户动态，热门repo，高质量博客动态。敬请期待。<a href="https://github.com/objnullcom/objnull" target="_blank">本站开源，欢迎贡献。</a>
+    </div>
+</div>
+<input id="ValPageSize" type="hidden" value="30" />
+<div class="row">
+    <div id="GitHubEventPage" class="col-md-12">
+
+    </div>
+</div>
+
