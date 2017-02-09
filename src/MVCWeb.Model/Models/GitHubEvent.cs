@@ -28,12 +28,12 @@ namespace MVCWeb.Model.Models
         public DateTime CreateDate { get; set; }
 
         /// <summary>
-        /// 标识
+        /// 事件类型
         /// </summary>
         public string EventType { get; set; }
 
         /// <summary>
-        /// 标识
+        /// 项目
         /// </summary>
         public string RepoName { get; set; }
 
@@ -42,5 +42,10 @@ namespace MVCWeb.Model.Models
         /// </summary>
         public string Robot { get; set; }
 
+        /// <summary>
+        /// 项目描述
+        /// </summary>
+        public string RepoDescription { get; set; }
+        
     }
 }

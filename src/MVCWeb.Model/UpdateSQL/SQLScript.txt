@@ -41,3 +41,4 @@ RepoName VARCHAR(100)
 );
 
 alter table githubevent add Robot varchar(20);
+alter table githubevent add RepoDescription varchar(300);
