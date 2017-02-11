@@ -42,3 +42,6 @@ RepoName VARCHAR(100)
 
 alter table githubevent add Robot varchar(20);
 alter table githubevent add RepoDescription varchar(300);
+
+#170210
+alter table githubevent change RepoDescription RepoDescription text;

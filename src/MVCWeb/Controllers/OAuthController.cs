@@ -107,13 +107,30 @@ namespace MVCWeb.Controllers
                     //用关注人数小于500的机器人账号关注普通用户
                     if (user.Email == null || (user.Email != null && !user.Email.EndsWith("objnull.com")))
                     {
-                        NullUser robot = NullUserDataSvc.GetByCondition(u => u.Email.EndsWith("objnull.com") && u.GitHubLogin.Contains("robot") && u.FollowingCount < 500).First();
+                        List<NullUser> robots = NullUserDataSvc.GetByCondition(u => u.Email.EndsWith("objnull.com") && u.GitHubLogin.Contains("robot")).ToList();
+                        //检查是否已关注
+                        bool followed = false;
                         GitHubClient github = new GitHubClient(new ProductHeaderValue("objnulldotcom"));
-                        github.Credentials = new Credentials(robot.GitHubAccessToken);
-                        github.User.Get(robot.GitHubLogin);
-                        github.User.Followers.Follow(user.GitHubLogin);
-                        robot.FollowingCount += 1;
-                        NullUserDataSvc.Update(robot);
+                        foreach (NullUser robot in robots)
+                        {
+                            github.Credentials = new Credentials(robot.GitHubAccessToken);
+                            if(github.User.Followers.IsFollowing(robot.GitHubLogin, user.GitHubLogin).Result)
+                            {
+                                followed = true;
+                                break;
+                            }
+                        }
+                        //关注
+                        if(!followed)
+                        {
+                            NullUser frobot = robots.Where(r => r.FollowingCount < 500).First();
+
+                            github.Credentials = new Credentials(frobot.GitHubAccessToken);
+                            github.User.Get(frobot.GitHubLogin);
+                            github.User.Followers.Follow(user.GitHubLogin);
+                            frobot.FollowingCount += 1;
+                            NullUserDataSvc.Update(frobot);
+                        }
                     }
 
                     if (string.IsNullOrEmpty(user.Email))
