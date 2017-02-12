@@ -9,24 +9,25 @@
     <div class="row">
         <div class="col-md-12" style="line-height: 32px">
             <a href="https://github.com/@githubEvent.GitHubLogin/" target="_blank"><img src="@(githubEvent.AvatarUrl)v=3&s=32" width="32" height="32" /></a>&nbsp;&nbsp;
-            <a href="https://github.com/@githubEvent.GitHubLogin/" target="_blank">@githubEvent.GitHubLogin</a>&nbsp;&nbsp;
+            <a href="https://github.com/@githubEvent.GitHubLogin/" target="_blank">@githubEvent.GitHubLogin</a>&nbsp;
             @switch (githubEvent.EventType)
             {
                 case "CreateEvent":
-                    <span style="color:red">创建了</span>
+                    <span style="color:red">Create</span>
                     break;
                 case "WatchEvent":
-                    <span>收藏了</span>
+                    <span>Star</span>
                     break;
                 case "ForkEvent":
-                    <span style="color: #11b40a">Fork了</span>
+                    <span style="color: #11b40a">Fork</span>
                     break;
                 default:
                     <span>@githubEvent.EventType</span>
                     break;
-            }&nbsp;&nbsp;
-            <a href="https://github.com/@githubEvent.RepoName/" target="_blank">@githubEvent.RepoName</a>&nbsp;&nbsp;
-            <span>@githubEvent.RepoDescription</span>&nbsp;&nbsp;
+            }&nbsp;
+            <a href="https://github.com/@githubEvent.RepoName/" target="_blank">@githubEvent.RepoName</a>&nbsp;
+            <span><span class="glyphicon glyphicon-star"></span> @githubEvent.RepoStarCount</span>&nbsp;&nbsp;
+            <span>@githubEvent.RepoDescription</span>
             <span style="display:inline-block; float: right">@githubEvent.CreateDate</span>
         </div>
     </div>

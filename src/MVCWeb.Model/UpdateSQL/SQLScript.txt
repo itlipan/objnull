@@ -45,3 +45,6 @@ alter table githubevent add RepoDescription varchar(300);
 
 #170210
 alter table githubevent change RepoDescription RepoDescription text;
+
+#170212
+alter table `GitHubEvent` add column `RepoStarCount` int not null

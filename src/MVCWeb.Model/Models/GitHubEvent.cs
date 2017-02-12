@@ -46,6 +46,11 @@ namespace MVCWeb.Model.Models
         /// 项目描述
         /// </summary>
         public string RepoDescription { get; set; }
+
+        /// <summary>
+        /// 项目Star人数
+        /// </summary>
+        public int RepoStarCount { get; set; }
         
     }
 }
