@@ -10,11 +10,18 @@ function ShowIPAddr() {
         var addrTd = $(this).parent().find("#TxtIPAddr");
         if (ip.length > 7) {
             $.ajax({
-                url: "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=" + ip,
+                url: "https://bird.ioliu.cn/v1/?url=http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=" + ip,
                 type: "get",
                 dataType: 'jsonp',
                 async: false,
                 complete: function (event, xhr, options) {
+                    if (window.execScript) {
+                        // 给IE的特殊待遇
+                        window.execScript(event.responseJSON);
+                    } else {
+                        // 给其他大部分浏览器用的
+                        window.eval(event.responseJSON);
+                    }
                     var addr = remote_ip_info.province + remote_ip_info.city + remote_ip_info.district;
                     $(addrTd).html(addr);
                 }
