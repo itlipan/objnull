@@ -9,18 +9,29 @@ function ShowIPAddr() {
         var ip = $(this).html();
         var addrTd = $(this).parent().find("#TxtIPAddr");
         if (ip.length > 7) {
+            //jsonp格式ajax跨域时，返回的js会自动执行，但https无法跨域http。
+            //$.ajax({
+            //    url: "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=" + ip,
+            //    type: "get",
+            //    dataType: 'jsonp',
+            //    async: false,
+            //    complete: function (event, xhr, options) {
+            //        var addr = remote_ip_info.province + remote_ip_info.city + remote_ip_info.district;
+            //        $(addrTd).html(addr);
+            //    }
+            //});
+            //代理解决跨域
             $.ajax({
                 url: "https://bird.ioliu.cn/v1/?url=http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=" + ip,
-                type: "get",
-                dataType: 'jsonp',
+                type: "Get",
                 async: false,
-                complete: function (event, xhr, options) {
+                success: function (result) {
                     if (window.execScript) {
                         // 给IE的特殊待遇
-                        window.execScript(event.responseJSON);
+                        window.execScript(result);
                     } else {
                         // 给其他大部分浏览器用的
-                        window.eval(event.responseJSON);
+                        window.eval(result);
                     }
                     var addr = remote_ip_info.province + remote_ip_info.city + remote_ip_info.district;
                     $(addrTd).html(addr);
@@ -52,7 +63,7 @@ function UserPage(index) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination-sm",
-                
+
                 onPageClick: function (pageNumber, event) {
                     UserPage(pageNumber);
                 }
@@ -113,7 +124,7 @@ function BlogPage(index) {
                 prevText: "<",
                 nextText: ">",
                 listStyle: "pagination pagination-sm",
-                
+
                 onPageClick: function (pageNumber, event) {
                     BlogPage(pageNumber);
                 }
