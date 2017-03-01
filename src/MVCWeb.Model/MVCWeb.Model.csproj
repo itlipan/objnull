@@ -68,6 +68,14 @@
     <Compile Include="Migrations\201702120412578_001.Designer.cs">
       <DependentUpon>201702120412578_001.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703011223242_002.cs" />
+    <Compile Include="Migrations\201703011223242_002.Designer.cs">
+      <DependentUpon>201703011223242_002.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703011341185_003.cs" />
+    <Compile Include="Migrations\201703011341185_003.Designer.cs">
+      <DependentUpon>201703011341185_003.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\NewBeeFloorReply.cs" />
@@ -78,6 +86,7 @@
     <Compile Include="Models\Blog.cs" />
     <Compile Include="Models\NullUser.cs" />
     <Compile Include="Models\GitHubEvent.cs" />
+    <Compile Include="Models\Resume.cs" />
     <Compile Include="Models\UserStar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -94,6 +103,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702120412578_001.resx">
       <DependentUpon>201702120412578_001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703011223242_002.resx">
+      <DependentUpon>201703011223242_002.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703011341185_003.resx">
+      <DependentUpon>201703011341185_003.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

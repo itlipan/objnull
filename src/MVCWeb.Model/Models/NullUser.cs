@@ -148,5 +148,10 @@ namespace MVCWeb.Model.Models
         /// 收到的NewBee楼层回复集合
         /// </summary>
         public virtual ICollection<NewBeeFloorReply> ReceivedNewBeeFloorReplys { get; set; }
+
+        /// <summary>
+        /// 简历集合
+        /// </summary>
+        public virtual ICollection<Resume> Resumes { get; set; }
     }
 }

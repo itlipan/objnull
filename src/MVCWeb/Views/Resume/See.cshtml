@@ -1,0 +1,33 @@
+﻿@using MVCWeb.Model.Models;
+@{
+    ViewBag.Title = ViewBag.GID + "的简历";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    Resume Resume = ViewBag.Resume;
+}
+@section head{
+    <!--jspdf-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
+    <!--Page-->
+    <script src="~/Scripts/Views/ResumeSee.js"></script>
+}
+@if (ViewBag.Edit)
+{
+    <a href="@Url.Action("Edit", "Resume")">编辑</a>
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <a id="BtnPDF" href="javascript:;">PDF</a>
+}
+<div style="width: 800px; padding: 20px; margin: 0px auto">
+    <div class="row" style="padding-top: 15px">
+        <div id="MDValue" class="col-md-12 mdv">
+            @if(!ViewBag.See)
+            {
+                <span>简历未公开</span>
+            }
+            else
+            {
+                @Html.Raw(Resume == null ? "" : Resume.Html)
+            }
+        </div>
+    </div>
+</div>
+

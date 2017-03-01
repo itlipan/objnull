@@ -112,4 +112,15 @@ namespace MVCWeb.Model.DBContext
             HasKey(that => that.ID);
         }
     }
+
+    public class ResumeMapping : EntityTypeConfiguration<Resume>
+    {
+        public ResumeMapping()
+        {
+            ToTable("Resume");
+            HasKey(that => that.ID);
+
+            HasRequired(it => it.User).WithMany(that => that.Resumes).HasForeignKey(it => it.UserID);
+        }
+    }
 }

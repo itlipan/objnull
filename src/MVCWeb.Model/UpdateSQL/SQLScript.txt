@@ -48,3 +48,15 @@ alter table githubevent change RepoDescription RepoDescription text;
 
 #170212
 alter table `GitHubEvent` add column `RepoStarCount` int not null
+
+#170301
+CREATE TABLE `Resume` 
+(`ID` CHAR(36) BINARY DEFAULT '' NOT NULL,
+`Public` BOOL NOT NULL,
+`MD` LONGTEXT,
+`Html` LONGTEXT, PRIMARY KEY (`ID`)
+)
+
+alter table `Resume` add column `UserID` CHAR(36) BINARY default ''  not null  
+CREATE index  `IX_UserID` on `Resume` (`UserID` DESC) using HASH
+alter table `Resume` add constraint `FK_Resume_NullUser_UserID`  foreign key (`UserID`) references `NullUser` ( `ID`)  on update cascade on delete cascade 

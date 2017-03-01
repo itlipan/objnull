@@ -14,6 +14,11 @@ namespace MVCWeb
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "ResumeSee",
+                url: "Resume/See/{githubID}",
+                defaults: new { controller = "Resume", action = "See", githubID = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Robot", action = "Index", id = UrlParameter.Optional }

@@ -16,6 +16,7 @@ namespace MVCWeb.Model.DBContext
         public IDbSet<UserStar> UserStars { get; set; }
         public IDbSet<Feedback> Feedbacks { get; set; }
         public IDbSet<GitHubEvent> GitHubEvents { get; set; }
+        public IDbSet<Resume> Resumes { get; set; }
 
         public MyDBContext() : base("MySQLConnection")
         {
@@ -42,6 +43,7 @@ namespace MVCWeb.Model.DBContext
             modelBuilder.Configurations.Add(new NewBeeFloorReplyMapping());
             modelBuilder.Configurations.Add(new FeedbackMapping());
             modelBuilder.Configurations.Add(new GitHubEventMapping());
+            modelBuilder.Configurations.Add(new ResumeMapping());
         }
     }
 }

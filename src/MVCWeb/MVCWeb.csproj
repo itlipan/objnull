@@ -243,6 +243,8 @@
     <Content Include="Scripts\Viewerjs\viewer.min.js" />
     <Content Include="Scripts\Views\BlogList.js" />
     <Content Include="Scripts\Views\BlogEdit.js" />
+    <Content Include="Scripts\Views\ResumeSee.js" />
+    <Content Include="Scripts\Views\ResumeEdit.js" />
     <Content Include="Scripts\Views\BlogNew.js" />
     <Content Include="Scripts\Views\BlogView.js" />
     <Content Include="Scripts\Views\DataManage.js" />
@@ -263,6 +265,7 @@
     <Compile Include="App_Start\Autofac.cs" />
     <Compile Include="App_Start\Filters.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ResumeController.cs" />
     <Compile Include="Controllers\RobotController.cs" />
     <Compile Include="SignalRHubs\Startup.cs" />
     <Compile Include="Assist\BaseController.cs" />
@@ -324,6 +327,8 @@
     <Content Include="Views\Home\UserRange.cshtml" />
     <Content Include="Views\Robot\Index.cshtml" />
     <Content Include="Views\Robot\GitHubEventPage.cshtml" />
+    <Content Include="Views\Resume\Edit.cshtml" />
+    <Content Include="Views\Resume\See.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
