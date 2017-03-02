@@ -251,4 +251,5 @@ paket-files/
 .idea/
 *.sln.iml
 
+# 自定义
 App_Data/

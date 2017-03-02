@@ -184,11 +184,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\libeay32.dll" />
-    <Content Include="bin\libgcc_s_dw2-1.dll" />
-    <Content Include="bin\mingwm10.dll" />
-    <Content Include="bin\ssleay32.dll" />
-    <Content Include="bin\wkhtmltox0.dll" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -211,11 +206,21 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="复制这里面的dll至bin\libeay32.dll" />
-    <Content Include="复制这里面的dll至bin\libgcc_s_dw2-1.dll" />
-    <Content Include="复制这里面的dll至bin\mingwm10.dll" />
-    <Content Include="复制这里面的dll至bin\ssleay32.dll" />
-    <Content Include="复制这里面的dll至bin\wkhtmltox0.dll" />
+    <Content Include="libeay32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libgcc_s_dw2-1.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="mingwm10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ssleay32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wkhtmltox0.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\Pub.pubxml" />
     <Content Include="Images\Lv\lv2.png" />
     <Content Include="Images\Lv\lv5.png" />
@@ -357,6 +362,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MVCWeb.DataSvc\MVCWeb.DataSvc.csproj">
