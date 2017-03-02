@@ -5,18 +5,23 @@
     Resume Resume = ViewBag.Resume;
 }
 @section head{
-    <!--jspdf-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
     <!--Page-->
     <script src="~/Scripts/Views/ResumeSee.js"></script>
 }
-@if (ViewBag.Edit)
-{
-    <a href="@Url.Action("Edit", "Resume")">编辑</a>
-    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <a id="BtnPDF" href="javascript:;">PDF</a>
-}
-<div style="width: 800px; padding: 20px; margin: 0px auto">
+<div class="row" style="height: 50px; line-height: 50px">
+    <div class="col-md-12 text-right">
+        @if (ViewBag.Edit)
+        {
+            <a class="btn btn-primary" href="@Url.Action("Edit", "Resume")">编辑</a>
+        }
+        @if (ViewBag.See && Resume != null)
+        {
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <a class="btn btn-success" id="BtnPDF" href="@Url.Action("HtmlToPdf", "File", new { uid = Resume.UserID })">PDF</a>
+        }
+    </div>
+</div>
+<div id="BoxPDF" style="width: 840px; padding: 20px; margin: 0px auto; background-color: #fff; border: 1px solid #999999">
     <div class="row" style="padding-top: 15px">
         <div id="MDValue" class="col-md-12 mdv">
             @if(!ViewBag.See)
@@ -25,7 +30,7 @@
             }
             else
             {
-                @Html.Raw(Resume == null ? "" : Resume.Html)
+                @Html.Raw(Resume == null ? "还没有编辑简历" : Resume.Html)
             }
         </div>
     </div>

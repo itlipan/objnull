@@ -7,11 +7,16 @@ using System.IO;
 using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
+using MVCWeb.Model.Models;
+using MVCWeb.DataSvc.Svc;
+using Pechkin;
 
 namespace MVCWeb.Controllers
 {
     public class FileController : BaseController
     {
+        public INullUserDataSvc NullUserDataSvc { get; set; }
+
         //上传图片
         [HttpPost]
         public ActionResult JqueryUploadImg(HttpPostedFileBase upFile, int pt)
@@ -52,6 +57,24 @@ namespace MVCWeb.Controllers
             return Json(new { error = "", path = date + ":" + newName });
         }
 
+        //获取文件content-type
+        public string GetContentType(string ext)
+        {
+            switch(ext)
+            {
+                case ".jpg":
+                    return "application/x-jpg";
+                case ".png":
+                    return "image/png";
+                case ".bmp":
+                    return "application/x-bmp";
+                case ".gif":
+                    return "image/gif";
+                default:
+                    return "application/octet-stream";
+            }
+        }
+
         //下载图片
         public ActionResult DownloadImg(string path, int pt, int w = 0, int h = 0)
         {
@@ -75,9 +98,10 @@ namespace MVCWeb.Controllers
                     break;
             }
             fPath = fPath + path.Replace(":", "\\");
-            if(w == 0 || h == 0)
+            string contentType = GetContentType(Path.GetExtension(fPath));
+            if (w == 0 || h == 0)
             {
-                return File(fPath, "application/octet-stream", "temp");
+                return File(fPath, contentType, "temp");
             }
             else
             {
@@ -105,9 +129,22 @@ namespace MVCWeb.Controllers
                     Image temp = Image.FromStream(ms);
                     ImageConverter converter = new ImageConverter();
                     byte[] imgbytes = (byte[])converter.ConvertTo(temp, typeof(byte[]));
-                    return File(imgbytes, "application/octet-stream", "temp");
+                    return File(imgbytes, contentType, "temp");
                 }
             }
+        }
+
+        //html to pdf
+        [ValidateInput(false)]
+        public ActionResult HtmlToPdf(Guid uid)
+        {
+            Resume resume = NullUserDataSvc.GetByID(uid).Resumes.FirstOrDefault();
+            if (string.IsNullOrEmpty(resume.Html))
+            {
+                return Content("简历为空");
+            }
+            byte[] bytes = new SimplePechkin(new GlobalConfig()).Convert(resume.Html);
+            return File(bytes, "application/pdf", "简历.pdf");
         }
     }
 }
