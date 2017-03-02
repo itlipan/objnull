@@ -9,7 +9,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using MVCWeb.Model.Models;
 using MVCWeb.DataSvc.Svc;
-using Pechkin;
+using TuesPechkin;
+using System.Drawing.Printing;
 
 namespace MVCWeb.Controllers
 {
@@ -60,7 +61,7 @@ namespace MVCWeb.Controllers
         //获取文件content-type
         public string GetContentType(string ext)
         {
-            switch(ext)
+            switch (ext)
             {
                 case ".jpg":
                     return "application/x-jpg";
@@ -143,8 +144,33 @@ namespace MVCWeb.Controllers
             {
                 return Content("简历为空");
             }
-            byte[] bytes = new SimplePechkin(new GlobalConfig()).Convert(resume.Html);
-            return File(bytes, "application/pdf", "简历.pdf");
+
+            var document = new HtmlToPdfDocument
+            {
+                GlobalSettings =
+                {
+                    ProduceOutline = true,
+                    DocumentTitle = "简历",
+                    PaperSize = PaperKind.A4,
+                    Margins =
+                    {
+                        All = 1.375,
+                        Unit = Unit.Centimeters
+                    }
+                },
+                Objects = { new ObjectSettings { HtmlText = resume.Html, WebSettings = new WebSettings { DefaultEncoding = "utf-8" } } }
+            };
+
+            var tempFolderDeployment = new TempFolderDeployment();
+            var win32EmbeddedDeployment = new Win32EmbeddedDeployment(tempFolderDeployment);
+            var remotingToolset = new RemotingToolset<PdfToolset>(win32EmbeddedDeployment);
+
+            var converter = new ThreadSafeConverter(remotingToolset);
+
+            byte[] pdfBuf = converter.Convert(document);
+            remotingToolset.Unload();
+
+            return File(pdfBuf, "application/pdf", "简历.pdf");
         }
     }
 }

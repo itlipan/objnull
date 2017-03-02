@@ -54,8 +54,8 @@ $(function () {
                     return;
                 }
             }
-            if (data.files[0].size > 1024 * 1024 * 3) {
-                swal("图片最大为3M");
+            if (data.files[0].size > 1024 * 200) {
+                swal("因生成PDF中图片耗费大量CPU，所以图片最大为200KB");
                 return;
             }
             data.submit();
