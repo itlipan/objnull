@@ -17,12 +17,13 @@
     <!--Page-->
     <script src="~/Scripts/Views/ResumeEdit.js"></script>
 }
-<div style="width: 800px; padding: 20px; margin: 0px auto">
-    <div class="row" style="padding-top: 15px">
+<div style="width: 840px; padding: 20px; margin: 20px auto; background-color: #fff; border: 1px solid #999999">
+    <div class="row">
         <div id="MDValue" class="col-md-12 mdv">
         </div>
     </div>
-    <hr />
+</div>
+<div style="width: 840px;margin: 0px auto; ">
     <div class="row">
         <div class="col-md-12">
             <span>查看&nbsp;<a href="https://github.com/geekcompany/ResumeSample" target="_blank">MarkDown简历模板</a>&nbsp;,&nbsp;</span>
@@ -40,9 +41,9 @@
     </div>
     <div class="row" style="margin-top: 20px; line-height: 34px">
         <div class="col-md-3 text-left">
-            @{ 
+            @{
                 string pub = "", pri = "checked";
-                if(Resume != null)
+                if (Resume != null)
                 {
                     pub = Resume.Public ? "checked=\"checked\"" : "";
                     pri = Resume.Public ? "" : "checked=\"checked\"";
@@ -56,4 +57,6 @@
         </div>
     </div>
 </div>
+
+
 

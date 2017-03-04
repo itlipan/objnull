@@ -18,7 +18,7 @@ $(function () {
         highlight: function (code) {
             return hljs.highlightAuto(code).value;
         },
-        sanitize: true,
+        sanitize: false,
         breaks: true
     });
 
